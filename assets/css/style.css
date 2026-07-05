@@ -300,3 +300,200 @@ footer a:hover { text-decoration: underline; }
   .post-page { padding: 32px 0 48px; }
   .post-header h1 { font-size: 1.4rem; }
 }
+
+/* ===== Splash Screen (APEX Legends style) ===== */
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(162deg, #c9b99a 0%, #c9b99a 43.5%, #8b1a1a 43.5%, #8b1a1a 100%);
+  font-family: 'Inter', 'Noto Sans SC', sans-serif;
+  cursor: default;
+  opacity: 1;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.splash-hidden {
+  opacity: 0;
+  transform: translateY(-30px);
+  pointer-events: none;
+}
+
+/* Noise texture overlay */
+.splash-noise {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  background-size: 300px 300px;
+  opacity: 0.12;
+  mix-blend-mode: multiply;
+}
+
+/* ===== Splash Center Content ===== */
+.splash-center {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+/* MIEMIE Logo — distressed game style */
+.splash-logo {
+  font-family: 'Anton', 'Impact', 'Arial Black', sans-serif;
+  font-size: clamp(4rem, 14vw, 10rem);
+  letter-spacing: 0.12em;
+  line-height: 1;
+  color: #1c1c1c;
+  position: relative;
+  text-shadow:
+    3px 3px 0 #0a0a0a,
+    -1px -1px 0 #3a3a3a,
+    5px 5px 15px rgba(0,0,0,0.35);
+  opacity: 0;
+  transform: scale(0.92);
+  animation: splashLogoIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+}
+
+/* Distressed edge effect via pseudo-element */
+.splash-logo::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  background: inherit;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n2)' opacity='0.5'/%3E%3C/svg%3E");
+  background-size: 200px 100%;
+  pointer-events: none;
+  opacity: 0.15;
+}
+
+/* LIU YANG subtitle */
+.splash-sub {
+  font-family: 'Inter', 'Noto Sans SC', sans-serif;
+  font-size: clamp(0.85rem, 2vw, 1.2rem);
+  letter-spacing: 0.6em;
+  font-weight: 300;
+  color: rgba(255,255,255,0.75);
+  margin-top: -0.3em;
+  margin-bottom: 48px;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: splashFadeIn 0.6s ease 0.6s forwards;
+}
+
+/* 继续 button */
+.splash-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 36px;
+  background: rgba(0,0,0,0.25);
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: 6px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  opacity: 0;
+  animation: splashFadeIn 0.5s ease 0.9s forwards;
+}
+
+.splash-btn:hover {
+  background: rgba(0,0,0,0.4);
+  border-color: rgba(255,255,255,0.45);
+  transform: scale(1.06);
+}
+
+.splash-btn:active {
+  transform: scale(0.97);
+}
+
+.splash-btn-icon {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+/* ===== Splash Bottom Bar ===== */
+.splash-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 28px;
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  opacity: 0;
+  animation: splashFadeIn 0.5s ease 0.8s forwards;
+}
+
+.splash-bottom-center {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.splash-theme-btn {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.5);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: color 0.2s;
+  line-height: 1;
+}
+
+.splash-theme-btn:hover {
+  color: rgba(255,255,255,0.9);
+}
+
+.splash-lang-btn {
+  cursor: default;
+  font-size: 0.75rem;
+}
+
+/* ===== Splash Animations ===== */
+@keyframes splashLogoIn {
+  from { opacity: 0; transform: scale(0.85) translateY(20px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes splashFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Splash Responsive ===== */
+@media (max-width: 640px) {
+  .splash-logo {
+    font-size: clamp(2.8rem, 18vw, 5rem);
+  }
+  .splash-bottom {
+    padding: 10px 16px;
+    font-size: 0.65rem;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .splash-bottom-center { gap: 12px; }
+  .splash-btn { padding: 12px 28px; font-size: 0.9rem; }
+}

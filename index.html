@@ -3,6 +3,85 @@ layout: default
 title: 刘阳 · AI4S
 ---
 
+<!-- APEX Legends style Splash Screen -->
+<div class="splash" id="splash">
+  <div class="splash-noise"></div>
+
+  <div class="splash-center">
+    <div class="splash-logo">MIEMIE</div>
+    <div class="splash-sub">LIU YANG</div>
+    <button class="splash-btn" id="splashBtn">
+      <svg class="splash-btn-icon" viewBox="0 0 18 18"><path d="M15.25 9.5L3.25 16.5V2.5L15.25 9.5Z"/></svg>
+      继续
+    </button>
+  </div>
+
+  <div class="splash-bottom">
+    <span>ESC 退出</span>
+    <div class="splash-bottom-center">
+      <button class="splash-theme-btn" id="splashThemeToggle">🌙</button>
+      <span class="splash-lang-btn">中/EN</span>
+    </div>
+    <span>©2026 刘阳</span>
+  </div>
+</div>
+
+<script>
+(function() {
+  const splash = document.getElementById('splash');
+  const splashBtn = document.getElementById('splashBtn');
+
+  function hideSplash() {
+    if (!splash || splash.classList.contains('splash-hidden')) return;
+    splash.classList.add('splash-hidden');
+    setTimeout(function() { splash.style.display = 'none'; }, 700);
+  }
+
+  // Click on splash (but not on buttons inside the bottom bar) = enter
+  splash.addEventListener('click', function(e) {
+    // Ignore clicks on the bottom bar area so theme/language buttons still work
+    var bottom = splash.querySelector('.splash-bottom');
+    if (bottom && bottom.contains(e.target)) return;
+    hideSplash();
+  });
+
+  // ESC key to exit
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') hideSplash();
+  });
+
+  // Theme toggle inside splash syncs with main theme
+  var splashThemeBtn = document.getElementById('splashThemeToggle');
+  if (splashThemeBtn) {
+    var currentTheme = localStorage.getItem('theme');
+    if (!currentTheme) {
+      currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    splashThemeBtn.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+
+    splashThemeBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var body = document.body;
+      var isDark = body.classList.contains('dark');
+      var newMode = isDark ? 'light' : 'dark';
+      body.classList.remove('light', 'dark');
+      if (newMode === 'dark') {
+        body.classList.add('dark');
+        splashThemeBtn.textContent = '☀️';
+      } else {
+        body.classList.add('light');
+        splashThemeBtn.textContent = '🌙';
+      }
+      localStorage.setItem('theme', newMode);
+    });
+  }
+
+  // Prevent body scroll while splash is visible
+  document.body.style.overflow = 'hidden';
+  setTimeout(function() { document.body.style.overflow = ''; }, 700);
+})();
+</script>
+
 <section class="hero">
   <div class="container">
     <div class="hero-avatar">🧪</div>
