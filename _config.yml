@@ -1,0 +1,28 @@
+title: 刘阳 · AI4S
+description: 清华大学 · 致理书院 · 化学 — AI for Science
+url: "https://tuolaskifc.github.io"
+baseurl: ""
+author: 刘阳
+lang: zh-CN
+
+# 构建配置
+markdown: kramdown
+permalink: /blog/:year/:month/:day/:title/
+
+# 文章分页
+paginate: 10
+paginate_path: "/page:num/"
+
+# 默认 YAML Front Matter
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      mathjax: true
+
+# 排除文件
+exclude:
+  - README.md
+  - CNAME

@@ -1,0 +1,41 @@
+---
+layout: default
+title: 博客
+---
+
+<div class="page-header container">
+  <h1>📝 博客</h1>
+</div>
+
+<section class="container post-list">
+  {% for post in paginator.posts %}
+  <div class="post-card" onclick="location.href='{{ post.url | relative_url }}'">
+    <div class="post-meta">
+      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
+      {% if post.tags %}
+      <span class="post-tag">{{ post.tags | first }}</span>
+      {% endif %}
+    </div>
+    <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+    <p>{{ post.excerpt | strip_html | normalize_whitespace | truncate: 160 }}</p>
+  </div>
+  {% else %}
+  <p style="color: var(--text-muted); text-align: center; padding: 60px 0;">还没有文章，很快会来 🧪</p>
+  {% endfor %}
+
+  {% if paginator.total_pages > 1 %}
+  <div style="display: flex; justify-content: space-between; padding: 20px 0;">
+    {% if paginator.previous_page %}
+    <a href="{{ paginator.previous_page_path | relative_url }}" style="padding: 8px 20px; border-radius: 8px; border: 1px solid var(--border); font-size: 0.9rem;">← 上一页</a>
+    {% else %}
+    <span></span>
+    {% endif %}
+    <span style="color: var(--text-muted); font-size: 0.9rem;">第 {{ paginator.page }} / {{ paginator.total_pages }} 页</span>
+    {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path | relative_url }}" style="padding: 8px 20px; border-radius: 8px; border: 1px solid var(--border); font-size: 0.9rem;">下一页 →</a>
+    {% else %}
+    <span></span>
+    {% endif %}
+  </div>
+  {% endif %}
+</section>

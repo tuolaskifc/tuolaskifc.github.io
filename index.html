@@ -1,0 +1,100 @@
+---
+layout: default
+title: 刘阳 · AI4S
+---
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-avatar">🧪</div>
+    <h1>{{ site.author }}</h1>
+    <h2>清华大学 · 致理书院 · 化学大二</h2>
+    <p>
+      探索 AI for Science 在化学中的可能性。关注计算化学、AI 驱动分子设计、机器学习力场等方向，希望能用数据驱动的方法加速科学发现。
+    </p>
+    <div class="hero-socials">
+      <a href="https://github.com/tuolaskifc" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        tuolaskifc
+      </a>
+      <a href="mailto:y-liu25@mails.tsinghua.edu.cn">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        y-liu25@mails.tsinghua.edu.cn
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 研究兴趣 -->
+<section class="section-block container" id="research">
+  <h2 class="section-title">🔬 研究兴趣</h2>
+  <div class="research-grid">
+    <div class="research-card">
+      <h3>AI for Science — 计算化学方向</h3>
+      <p>
+        关注机器学习力场（MLFF）、密度泛函理论加速、增强采样等方向，探索如何用深度学习模型桥接量子化学计算与分子模拟的效率鸿沟。
+      </p>
+    </div>
+    <div class="research-card">
+      <h3>AI 驱动的分子设计与筛选</h3>
+      <p>
+        利用生成模型、图神经网络和强化学习进行分子构象生成、性质预测与虚拟筛选，加速先导化合物发现与优化。
+      </p>
+    </div>
+    <div class="research-card">
+      <h3>基础模型在化学中的应用</h3>
+      <p>
+        研究大规模预训练模型（如化学语言模型、3D 分子表征模型）在逆合成分析、反应预测、谱图解析等任务中的迁移能力与可解释性。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 最新博客 -->
+<section class="section-block container" id="posts">
+  <h2 class="section-title">📝 最新文章</h2>
+  <div class="post-list">
+    {% for post in site.posts limit:5 %}
+    <div class="post-card" onclick="location.href='{{ post.url | relative_url }}'">
+      <div class="post-meta">
+        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
+        {% if post.tags %}
+        <span class="post-tag">{{ post.tags | first }}</span>
+        {% endif %}
+      </div>
+      <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+      <p>{{ post.excerpt | strip_html | normalize_whitespace | truncate: 120 }}</p>
+    </div>
+    {% else %}
+    <p style="color: var(--text-muted);">还没有文章，很快会来 🧪</p>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- 关于我 -->
+<section class="section-block container" id="about">
+  <h2 class="section-title">🧑‍🔬 关于我</h2>
+  <div class="info-grid">
+    <div class="info-block">
+      <h3>教育</h3>
+      <p class="edu-line">🎓 清华大学 · 致理书院 · 化学专业（大二）</p>
+      <p class="about-text" style="margin-top: 8px;">
+        正在探索 AI + 化学的交叉方向，希望将机器学习和科学计算结合，为化学问题提供新的视角。
+      </p>
+    </div>
+    <div class="info-block">
+      <h3>技能 / 兴趣标签</h3>
+      <ul class="tag-list">
+        <li>Python</li>
+        <li>PyTorch</li>
+        <li>NumPy / SciPy</li>
+        <li>分子动力学</li>
+        <li>DFT</li>
+        <li>机器学习</li>
+        <li>GNN</li>
+        <li>化学信息学</li>
+        <li>Linux</li>
+        <li>Git</li>
+      </ul>
+    </div>
+  </div>
+</section>
