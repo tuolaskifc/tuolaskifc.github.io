@@ -21,6 +21,84 @@
 </head>
 <body>
 
+<!-- APEX Legends style Splash Screen — only on home page -->
+<div class="splash" id="splash">
+  <div class="splash-noise"></div>
+  <div class="splash-center">
+    <div class="splash-logo">MIEMIE</div>
+    <div class="splash-sub">LIU YANG</div>
+    <button class="splash-btn" id="splashBtn">
+      <svg class="splash-btn-icon" viewBox="0 0 18 18"><path d="M15.25 9.5L3.25 16.5V2.5L15.25 9.5Z"/></svg>
+      继续
+    </button>
+  </div>
+  <div class="splash-bottom">
+    <span>ESC 退出</span>
+    <div class="splash-bottom-center">
+      <button class="splash-theme-btn" id="splashThemeToggle">🌙</button>
+      <span class="splash-lang-btn">中/EN</span>
+    </div>
+    <span>©2026 刘阳</span>
+  </div>
+</div>
+
+<script>
+(function() {
+  // Only show splash on the home page
+  if (window.location.pathname.replace(/\/$/, '') !== '' && window.location.pathname !== '/index.html') return;
+
+  const splash = document.getElementById('splash');
+  if (!splash) return;
+
+  function hideSplash() {
+    if (splash.classList.contains('splash-hidden')) return;
+    splash.classList.add('splash-hidden');
+    setTimeout(function() { splash.style.display = 'none'; }, 700);
+  }
+
+  splash.addEventListener('click', function(e) {
+    var bottom = splash.querySelector('.splash-bottom');
+    if (bottom && bottom.contains(e.target)) return;
+    hideSplash();
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') hideSplash();
+  });
+
+  // Sync theme toggle
+  var splashThemeBtn = document.getElementById('splashThemeToggle');
+  if (splashThemeBtn) {
+    var currentTheme = localStorage.getItem('theme');
+    if (!currentTheme) {
+      currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    splashThemeBtn.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+    splashThemeBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var body = document.body;
+      var isDark = body.classList.contains('dark');
+      var newMode = isDark ? 'light' : 'dark';
+      body.classList.remove('light', 'dark');
+      if (newMode === 'dark') {
+        body.classList.add('dark');
+        splashThemeBtn.textContent = '☀️';
+      } else {
+        body.classList.add('light');
+        splashThemeBtn.textContent = '🌙';
+      }
+      localStorage.setItem('theme', newMode);
+    });
+  }
+
+  // Prevent body scroll while splash is visible
+  document.body.style.overflow = 'hidden';
+  setTimeout(function() { document.body.style.overflow = ''; }, 700);
+
+  splash.style.display = 'flex';
+})();
+</script>
+
   <nav>
     <div class="container">
       <a href="{{ '/' | relative_url }}" class="nav-brand">{{ site.author }}</a>
