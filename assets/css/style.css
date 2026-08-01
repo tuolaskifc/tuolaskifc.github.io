@@ -557,6 +557,49 @@ footer a:hover { text-decoration: underline; }
   font-weight: 400;
 }
 
+/* ===== 站长模式 / 私密文章 ===== */
+.private-tag {
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+}
+.admin-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  background: transparent;
+  border-radius: 3px;
+}
+.admin-toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translate(-50%, 20px);
+  z-index: 10000;
+  padding: 10px 22px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  background: var(--card-bg);
+  border: 1px solid var(--accent);
+  color: var(--text);
+  border-radius: 4px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+.admin-toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+/* 私密卡片在 JS 未执行时也不可见（防闪） */
+.post-card[data-private="true"] {
+  display: none;
+}
+
 /* ===== 响应式 ===== */
 @media (max-width: 640px) {
   .hero { padding: 56px 0 40px; }

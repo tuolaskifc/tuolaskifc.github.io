@@ -117,6 +117,7 @@
           <a href="{{ '/#about' | relative_url }}">关于</a>
         </div>
         <button class="theme-toggle" id="themeToggle" aria-label="切换主题">🌙</button>
+        <span class="admin-badge" id="adminBadge" style="display:none;">🔓 站长</span>
       </div>
     </div>
   </nav>
@@ -159,6 +160,62 @@
       const isDark = body.classList.contains('dark');
       applyTheme(isDark ? 'light' : 'dark');
     });
+  </script>
+
+  <script>
+    // ===== 站长模式 (Konami Code: ↑↑↓↓←→←→BA) =====
+    (function() {
+      const KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+      const EASTER = ['a','p','e','x','l','e','g','e','n','d'];
+
+      let buffer = [];
+      let adminOn = sessionStorage.getItem('adminMode') === '1';
+
+      function applyAdmin() {
+        // 显示/隐藏私密文章
+        document.querySelectorAll('.post-card[data-private="true"]').forEach(function(el) {
+          el.style.display = adminOn ? 'block' : 'none';
+        });
+        // 导航栏徽章
+        var badge = document.getElementById('adminBadge');
+        if (badge) badge.style.display = adminOn ? 'inline-block' : 'none';
+      }
+
+      function toast(msg) {
+        var t = document.createElement('div');
+        t.className = 'admin-toast';
+        t.textContent = msg;
+        document.body.appendChild(t);
+        setTimeout(function() { t.classList.add('show'); }, 10);
+        setTimeout(function() {
+          t.classList.remove('show');
+          setTimeout(function() { t.remove(); }, 400);
+        }, 2200);
+      }
+
+      document.addEventListener('keydown', function(e) {
+        // 只跟踪普通按键，忽略功能键组合
+        if (e.ctrlKey || e.metaKey || e.altKey) return;
+        buffer.push(e.key.length === 1 ? e.key.toLowerCase() : e.key);
+        if (buffer.length > 10) buffer.shift();
+
+        // Konami Code → 切换站长模式
+        if (buffer.slice(-KONAMI.length).join(',') === KONAMI.join(',')) {
+          adminOn = !adminOn;
+          sessionStorage.setItem('adminMode', adminOn ? '1' : '0');
+          applyAdmin();
+          toast(adminOn ? '🔓 站长模式已开启' : '🔒 站长模式已关闭');
+          buffer = [];
+        }
+        // apexlegend → 彩蛋页面（预留）
+        else if (buffer.slice(-EASTER.length).join(',') === EASTER.join(',')) {
+          toast('🚧 彩蛋页面施工中，敬请期待');
+          buffer = [];
+        }
+      });
+
+      applyAdmin();
+    })();
   </script>
 
 </body>
