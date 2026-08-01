@@ -50,9 +50,16 @@
   const splash = document.getElementById('splash');
   if (!splash) return;
 
+  // 本次会话已经进入过网站 → 不再显示 splash
+  if (sessionStorage.getItem('splashEntered')) {
+    splash.style.display = 'none';
+    return;
+  }
+
   function hideSplash() {
     if (splash.classList.contains('splash-hidden')) return;
     splash.classList.add('splash-hidden');
+    sessionStorage.setItem('splashEntered', '1');
     setTimeout(function() { splash.style.display = 'none'; }, 700);
   }
 
