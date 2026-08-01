@@ -216,6 +216,23 @@
 
       applyAdmin();
     })();
+
+    // ===== 彩蛋入口（手机端）：连点页脚版权 5 次 =====
+    (function() {
+      var target = document.querySelector('footer p');
+      if (!target) return;
+      var taps = 0, timer = null;
+      target.style.cursor = 'pointer';
+      target.addEventListener('click', function() {
+        taps++;
+        clearTimeout(timer);
+        timer = setTimeout(function() { taps = 0; }, 1200);
+        if (taps >= 5) {
+          taps = 0;
+          window.location.href = '{{ '/easter-egg/' | relative_url }}';
+        }
+      });
+    })();
   </script>
 
 </body>
