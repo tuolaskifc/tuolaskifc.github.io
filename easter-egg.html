@@ -1,0 +1,485 @@
+---
+layout: null
+permalink: /easter-egg/
+---
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>化学人格鉴定 · MIEMIE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/style.css">
+<style>
+  body { margin: 0; }
+  .quiz-app {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+    position: relative;
+  }
+  .quiz-app::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+    background-size: 300px 300px;
+    opacity: 0.06;
+    mix-blend-mode: overlay;
+    z-index: 0;
+  }
+  .quiz-card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 640px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+    padding: 40px 36px;
+  }
+  .quiz-back {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    text-decoration: none;
+    z-index: 2;
+  }
+  .quiz-back:hover { color: var(--accent); }
+
+  /* ===== 屏幕切换 ===== */
+  .quiz-screen { display: none; }
+  .quiz-screen.active { display: block; animation: fadeIn 0.4s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ===== 介绍屏 ===== */
+  .quiz-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .quiz-title {
+    font-family: 'Anton', 'Impact', sans-serif;
+    font-size: clamp(1.8rem, 5vw, 2.6rem);
+    letter-spacing: 0.06em;
+    text-align: center;
+    color: var(--sand);
+    margin-bottom: 14px;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+  }
+  .quiz-subtitle {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  /* ===== 按钮 ===== */
+  .quiz-btn {
+    display: block;
+    width: 100%;
+    padding: 14px 24px;
+    background: transparent;
+    border: 1.5px solid var(--accent);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.92rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+  }
+  .quiz-btn:hover {
+    background: var(--accent);
+    color: #fff;
+  }
+  .quiz-btn:active { transform: scale(0.98); }
+  .quiz-btn.primary { background: var(--accent); color: #fff; }
+  .quiz-btn.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+
+  /* ===== 问题屏 ===== */
+  .quiz-progress {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 28px;
+  }
+  .quiz-progress span {
+    flex: 1;
+    height: 3px;
+    background: var(--border);
+    transition: background 0.3s;
+  }
+  .quiz-progress span.done { background: var(--accent); }
+  .quiz-q-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 10px;
+  }
+  .quiz-question {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-option {
+    text-align: left;
+    padding: 14px 20px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 0.92rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    line-height: 1.5;
+  }
+  .quiz-option:hover {
+    border-color: var(--accent);
+    color: var(--text);
+    background: rgba(139,26,26,0.08);
+  }
+
+  /* ===== 结果屏 ===== */
+  .result-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .result-symbol {
+    font-family: 'Anton', 'Impact', sans-serif;
+    font-size: clamp(5rem, 18vw, 8rem);
+    line-height: 1;
+    text-align: center;
+    color: var(--sand);
+    text-shadow: 3px 3px 12px rgba(0,0,0,0.6), 0 0 30px rgba(139,26,26,0.3);
+    margin: 8px 0 4px;
+    animation: symbolIn 0.7s cubic-bezier(0.16,1,0.3,1);
+  }
+  @keyframes symbolIn {
+    from { opacity: 0; transform: scale(0.7); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .result-name {
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .result-en {
+    text-align: center;
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 20px;
+  }
+  .result-tagline {
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--accent);
+    font-style: italic;
+    margin-bottom: 20px;
+    padding: 0 8px;
+  }
+  .result-desc {
+    font-size: 0.9rem;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    margin-bottom: 18px;
+    padding: 14px 16px;
+    border-left: 3px solid var(--accent);
+    background: rgba(139,26,26,0.05);
+  }
+  .result-fact {
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    padding: 12px 16px;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+  }
+  .result-fact strong { color: var(--sand); letter-spacing: 0.04em; }
+  .result-actions { display: flex; gap: 10px; }
+  .result-actions .quiz-btn { flex: 1; }
+
+  @media (max-width: 640px) {
+    .quiz-card { padding: 28px 20px; }
+    .quiz-question { font-size: 1rem; }
+    .quiz-option { padding: 12px 16px; font-size: 0.85rem; }
+  }
+</style>
+</head>
+<body class="dark">
+
+<div class="quiz-app">
+  <a href="/" class="quiz-back">← 返回</a>
+  <div class="quiz-card">
+
+    <!-- 介绍屏 -->
+    <div class="quiz-screen active" id="screenIntro">
+      <div class="quiz-eyebrow">MIEMIE · 彩蛋</div>
+      <h1 class="quiz-title">化学人格鉴定</h1>
+      <p class="quiz-subtitle">
+        6 道题，测出你内心是哪种化学元素或化合物。<br>
+        没有标准答案，只有化学反应。
+      </p>
+      <button class="quiz-btn primary" id="btnStart">开始鉴定</button>
+    </div>
+
+    <!-- 问题屏 -->
+    <div class="quiz-screen" id="screenQuiz">
+      <div class="quiz-progress" id="progress"></div>
+      <div class="quiz-q-label" id="qLabel"></div>
+      <div class="quiz-question" id="qText"></div>
+      <div class="quiz-options" id="qOptions"></div>
+    </div>
+
+    <!-- 结果屏 -->
+    <div class="quiz-screen" id="screenResult">
+      <div class="result-eyebrow">鉴定结果</div>
+      <div class="result-symbol" id="rSymbol"></div>
+      <div class="result-name" id="rName"></div>
+      <div class="result-en" id="rEn"></div>
+      <div class="result-tagline" id="rTagline"></div>
+      <div class="result-desc" id="rDesc"></div>
+      <div class="result-fact" id="rFact"></div>
+      <div class="result-actions">
+        <button class="quiz-btn" id="btnRetry">重新鉴定</button>
+        <button class="quiz-btn primary" id="btnShare">复制结果</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function() {
+  // ===== 元素 / 化合物数据库 =====
+  const POOL = {
+    H: { symbol:'H', name:'氢', en:'Hydrogen',
+      tagline:'最简单，也最根本。',
+      desc:'你直击本质，不喜欢复杂。看似平平无奇，却是万物的起点——没有你，一切反应都无从发生。',
+      fact:'宇宙中约 75% 的可见物质是氢，恒星靠氢核聚变发光。' },
+    C: { symbol:'C', name:'碳', en:'Carbon',
+      tagline:'连接万物的核心。',
+      desc:'你善于建立关系，能和谁都搭上线。灵活多变，是团队的连接器——生命因你而可能。',
+      fact:'碳能形成上千万种化合物，是有机化学的基石，也是钻石与石墨的本体。' },
+    O: { symbol:'O', name:'氧', en:'Oxygen',
+      tagline:'活跃，不可或缺。',
+      desc:'你热情有感染力，走到哪都让事情"氧化"起来。但浓度太高，别人会有点喘不过气。',
+      fact:'氧占大气 21%，但纯氧长期吸入会引发氧化损伤（氧中毒）。' },
+    N: { symbol:'N', name:'氮', en:'Nitrogen',
+      tagline:'看似稳定，实则蕴含巨能。',
+      desc:'你低调沉默，平时不显山露水，但关键时刻能爆发出惊人能量。别低估安静的人。',
+      fact:'液氮沸点 −196°C；叠氮化物是炸药，但氮气本身极其稳定（N≡N 三键）。' },
+    Ne: { symbol:'Ne', name:'氖', en:'Neon',
+      tagline:'高冷，不反应，自己发光。',
+      desc:'你独立，不需要别人也能闪耀。社交对你来说是多余的能量消耗，通电就够亮了。',
+      fact:'氖是惰性气体，几乎不发生化学反应，通电发橙红色光——霓虹灯的本名。' },
+    Na: { symbol:'Na', name:'钠', en:'Sodium',
+      tagline:'急性子，遇水就炸。',
+      desc:'你热情外露，反应强烈，一点刺激就炸开。最好别把你扔进水里——真的会炸。',
+      fact:'钠遇水剧烈反应生成氢气并自燃，高中化学经典演示，平时泡在煤油里保存。' },
+    Fe: { symbol:'Fe', name:'铁', en:'Iron',
+      tagline:'坚韧，常见，有磁性。',
+      desc:'你可靠、是团队的中流砥柱。不花哨，但缺了你转不动。沉默地撑起一切。',
+      fact:'铁是地核主要成分，也是血红蛋白载氧的关键金属中心。' },
+    Au: { symbol:'Au', name:'金', en:'Gold',
+      tagline:'稀缺，稳定，永不腐蚀。',
+      desc:'你珍贵、经得起时间考验。不随波逐流，历久弥新——真金不怕火炼说的就是你。',
+      fact:'金的延展性极强，1 克可拉成约 3 公里长的金丝，也可打成透光金箔。' },
+    Hg: { symbol:'Hg', name:'汞', en:'Mercury',
+      tagline:'流动，多变，有点毒。',
+      desc:'你灵活多变，能适应任何容器。但靠近你的人都得小心——你迷人，但不无害。',
+      fact:'汞是常温下唯一液态金属，《爱丽丝》里"疯帽匠"的灵感来源（制帽用汞中毒）。' },
+    U: { symbol:'U', name:'铀', en:'Uranium',
+      tagline:'巨能，方向决定一切。',
+      desc:'你潜力巨大，用好了是能源，用错了是灾难。你的能量需要被正确引导。',
+      fact:'1 克铀-235 裂变释放的能量约等于 3 吨煤燃烧。' },
+    H2O: { symbol:'H₂O', name:'水', en:'Water',
+      tagline:'万能溶剂，包容一切。',
+      desc:'你适应力极强，能溶解各种局面。是生命的载体，没你不行，但你太常被忽视。',
+      fact:'水的比热容极高，是地球的恒温器；也是少数固态比液态轻的物质。' },
+    GLU: { symbol:'C₆H₁₂O₆', name:'葡萄糖', en:'Glucose',
+      tagline:'甜蜜的能量来源。',
+      desc:'你给人力量，是团队的燃料。甜蜜、直接、不可或缺——累了就来一口你。',
+      fact:'光合作用每年固定约 1000 亿吨葡萄糖，是几乎所有生命的能量起点。' },
+    CAF: { symbol:'C₈H₁₀N₄O₂', name:'咖啡因', en:'Caffeine',
+      tagline:'提神，让人上瘾。',
+      desc:'你是那个让大家保持运转的人，靠近你的人都停不下来。适度是燃料，过量是焦虑。',
+      fact:'咖啡因结构与腺苷相似，"骗"过大脑疲劳受体，是全球使用最广的精神活性物质。' },
+    BZ: { symbol:'C₆H₆', name:'苯', en:'Benzene',
+      tagline:'芳香，稳定，共轭。',
+      desc:'你外表平静稳定，内里有复杂的共轭世界。芳香迷人，但别靠太近——有点毒。',
+      fact:'凯库勒梦见蛇咬住自己尾巴，由此悟出苯环结构，开创芳香化学。' },
+    ETOH: { symbol:'C₂H₆O', name:'乙醇', en:'Ethanol',
+      tagline:'气氛活跃高手。',
+      desc:'你是社交润滑剂，让拘谨的人也放开。但过量就失控——你是双刃剑。',
+      fact:'75% 浓度乙醇杀菌最强（能穿透细胞膜），是消毒酒精的标准浓度。' }
+  };
+
+  // ===== 题目（每选项 boost 若干元素）=====
+  const QUESTIONS = [
+    { q: '周末的理想状态？',
+      opts: [
+        { text: '一个人待着，谁也别来烦我', boost: ['Ne','Hg'] },
+        { text: '和三两好友深度聊天', boost: ['C','H2O'] },
+        { text: '大派对，认识一堆新朋友', boost: ['O','ETOH','Na'] },
+        { text: '沉浸在自己的项目/研究里', boost: ['H','U','BZ'] }
+      ] },
+    { q: '遇到冲突时你的第一反应？',
+      opts: [
+        { text: '正面硬刚，刚到底', boost: ['Na','Fe'] },
+        { text: '当和事佬，周旋化解', boost: ['H2O','C'] },
+        { text: '冷处理，置身事外', boost: ['Ne','Au'] },
+        { text: '找个巧妙角度破局', boost: ['Hg','CAF'] }
+      ] },
+    { q: '你的能量风格？',
+      opts: [
+        { text: '持续稳定，长跑型', boost: ['Fe','Au','BZ'] },
+        { text: '爆发式，短时高强度', boost: ['Na','U'] },
+        { text: '需要充电，间歇性发力', boost: ['N','H'] },
+        { text: '永远在线，停不下来', boost: ['CAF','O'] }
+      ] },
+    { q: '朋友最常怎么形容你？',
+      opts: [
+        { text: '可靠，主心骨', boost: ['Fe','Au'] },
+        { text: '有感染力，气氛 maker', boost: ['O','ETOH'] },
+        { text: '神秘，看不透', boost: ['Ne','Hg','U'] },
+        { text: '甜蜜，给人力量', boost: ['GLU','C'] }
+      ] },
+    { q: '你最看重什么？',
+      opts: [
+        { text: '稀缺与不可替代', boost: ['Au','U'] },
+        { text: '普遍与重要', boost: ['O','H'] },
+        { text: '连接与关系', boost: ['C','H2O'] },
+        { text: '深藏的本质与规律', boost: ['H','N','BZ'] }
+      ] },
+    { q: '理想的工作/学习环境？',
+      opts: [
+        { text: '高压极端，挑战极限', boost: ['U','Na'] },
+        { text: '温和舒适，按自己节奏', boost: ['H2O','GLU'] },
+        { text: '流动多变，不重复', boost: ['Hg','ETOH'] },
+        { text: '结构有序，有章法', boost: ['Fe','BZ','Au'] }
+      ] }
+  ];
+
+  // ===== 状态 =====
+  let current = 0;
+  let scores = {};
+
+  const $ = id => document.getElementById(id);
+  const screens = { intro: $('screenIntro'), quiz: $('screenQuiz'), result: $('screenResult') };
+
+  function show(name) {
+    Object.values(screens).forEach(s => s.classList.remove('active'));
+    screens[name].classList.add('active');
+  }
+
+  function startQuiz() {
+    current = 0;
+    scores = {};
+    renderProgress();
+    renderQuestion();
+    show('quiz');
+  }
+
+  function renderProgress() {
+    const bar = $('progress');
+    bar.innerHTML = '';
+    for (let i = 0; i < QUESTIONS.length; i++) {
+      const s = document.createElement('span');
+      if (i < current) s.classList.add('done');
+      bar.appendChild(s);
+    }
+  }
+
+  function renderQuestion() {
+    const q = QUESTIONS[current];
+    $('qLabel').textContent = '问题 ' + (current + 1) + ' / ' + QUESTIONS.length;
+    $('qText').textContent = q.q;
+    const optsEl = $('qOptions');
+    optsEl.innerHTML = '';
+    q.opts.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-option';
+      btn.textContent = opt.text;
+      btn.addEventListener('click', () => answer(opt.boost));
+      optsEl.appendChild(btn);
+    });
+  }
+
+  function answer(boost) {
+    boost.forEach(k => { scores[k] = (scores[k] || 0) + 1; });
+    current++;
+    if (current >= QUESTIONS.length) {
+      showResult();
+    } else {
+      renderProgress();
+      renderQuestion();
+    }
+  }
+
+  function showResult() {
+    // 找最高分，平局按 POOL 出现顺序
+    let best = null, max = -1;
+    Object.keys(POOL).forEach(k => {
+      const s = scores[k] || 0;
+      if (s > max) { max = s; best = k; }
+    });
+    // 若全部为 0（不该发生），兜底选 C
+    if (max <= 0) best = 'C';
+    const r = POOL[best];
+    $('rSymbol').textContent = r.symbol;
+    $('rName').textContent = r.name;
+    $('rEn').textContent = r.en;
+    $('rTagline').textContent = '“' + r.tagline + '”';
+    $('rDesc').textContent = r.desc;
+    $('rFact').innerHTML = '<strong>💡 冷知识：</strong> ' + r.fact;
+    show('result');
+  }
+
+  function shareResult() {
+    const rSymbol = $('rSymbol').textContent;
+    const rName = $('rName').textContent;
+    const rTagline = $('rTagline').textContent;
+    const text = '我的化学人格是 ' + rName + ' (' + rSymbol + ') ' + rTagline + '\n来 MIEMIE 测测你是哪种元素 → https://tuolaskifc.github.io';
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(() => alert('已复制结果到剪贴板 ✓'));
+    } else {
+      prompt('复制以下结果：', text);
+    }
+  }
+
+  $('btnStart').addEventListener('click', startQuiz);
+  $('btnRetry').addEventListener('click', startQuiz);
+  $('btnShare').addEventListener('click', shareResult);
+})();
+</script>
+
+</body>
+</html>

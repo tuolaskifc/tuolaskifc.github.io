@@ -166,7 +166,7 @@
     // ===== 站长模式 (Konami Code: ↑↑↓↓←→←→BA) =====
     (function() {
       const KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
-      const EASTER = ['a','p','e','x','l','e','g','e','n','d'];
+      const EASTER = ['i','l','o','v','e','c','h','e','n'];
 
       let buffer = [];
       let adminOn = sessionStorage.getItem('adminMode') === '1';
@@ -207,9 +207,9 @@
           toast(adminOn ? '🔓 站长模式已开启' : '🔒 站长模式已关闭');
           buffer = [];
         }
-        // apexlegend → 彩蛋页面（预留）
+        // ilovechen → 彩蛋页面（化学人格鉴定）
         else if (buffer.slice(-EASTER.length).join(',') === EASTER.join(',')) {
-          toast('🚧 彩蛋页面施工中，敬请期待');
+          window.location.href = '{{ '/easter-egg/' | relative_url }}';
           buffer = [];
         }
       });
