@@ -167,6 +167,7 @@
     (function() {
       const KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
       const EASTER = ['i','l','o','v','e','c','h','e','n'];
+      const APEX = ['a','p','e','x','l','e','g','e','n','d'];
 
       let buffer = [];
       let adminOn = sessionStorage.getItem('adminMode') === '1';
@@ -197,7 +198,7 @@
         // 只跟踪普通按键，忽略功能键组合
         if (e.ctrlKey || e.metaKey || e.altKey) return;
         buffer.push(e.key.length === 1 ? e.key.toLowerCase() : e.key);
-        if (buffer.length > 10) buffer.shift();
+        if (buffer.length > 11) buffer.shift();
 
         // Konami Code → 切换站长模式
         if (buffer.slice(-KONAMI.length).join(',') === KONAMI.join(',')) {
@@ -207,9 +208,14 @@
           toast(adminOn ? '🔓 站长模式已开启' : '🔒 站长模式已关闭');
           buffer = [];
         }
-        // ilovechen → 彩蛋页面（化学人格鉴定）
+        // ilovechen → 化学人格鉴定
         else if (buffer.slice(-EASTER.length).join(',') === EASTER.join(',')) {
           window.location.href = '{{ '/easter-egg/' | relative_url }}';
+          buffer = [];
+        }
+        // apexlegend → B站视频彩蛋
+        else if (buffer.slice(-APEX.length).join(',') === APEX.join(',')) {
+          window.location.href = '{{ '/easter-egg-apex/' | relative_url }}';
           buffer = [];
         }
       });
