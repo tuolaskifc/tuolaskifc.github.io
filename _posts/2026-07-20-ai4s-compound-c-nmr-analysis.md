@@ -1,6 +1,6 @@
 ---
 title: "AI4S 结构解析：化合物 C 的 NMR & ESI-MS 综合谱学分析"
-date: 2026-08-01
+date: 2026-07-20
 tags: [AI4S, NMR, 化学波谱]
 ---
 
