@@ -231,9 +231,91 @@ permalink: /easter-egg/
     .quiz-question { font-size: 1rem; }
     .quiz-option { padding: 12px 16px; font-size: 0.85rem; }
   }
+
+  /* ===== 入场全屏特效 ===== */
+  .enter-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    animation: enterBg 2s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  .enter-scanlines {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(139,26,26,0.08) 0px,
+      rgba(139,26,26,0.08) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    pointer-events: none;
+    animation: scanShift 0.3s steps(3) infinite;
+  }
+  .enter-text {
+    font-family: 'Anton', 'Impact', sans-serif;
+    font-size: clamp(3rem, 14vw, 7rem);
+    letter-spacing: 0.18em;
+    color: #8b1a1a;
+    text-shadow: 0 0 30px rgba(139,26,26,0.6);
+    opacity: 0;
+    animation: enterText 2s ease forwards;
+    position: relative;
+  }
+  .enter-sub {
+    margin-top: 14px;
+    font-size: 0.8rem;
+    letter-spacing: 0.4em;
+    color: rgba(201,185,154,0.6);
+    opacity: 0;
+    animation: enterSub 2s ease forwards;
+  }
+  @keyframes enterBg {
+    0%   { background: #000; }
+    8%   { background: #8b1a1a; }
+    12%  { background: #000; }
+    18%  { background: #5a0f0f; }
+    22%  { background: #000; }
+    30%  { background: #000; }
+    100% { background: #000; opacity: 0; visibility: hidden; }
+  }
+  @keyframes enterText {
+    0%, 15% { opacity: 0; transform: scale(0.9); }
+    25%     { opacity: 1; transform: scale(1); }
+    60%     { opacity: 1; }
+    85%     { opacity: 0; transform: scale(1.1); }
+    100%    { opacity: 0; }
+  }
+  @keyframes enterSub {
+    0%, 30%  { opacity: 0; letter-spacing: 0.2em; }
+    45%      { opacity: 0.7; letter-spacing: 0.4em; }
+    70%      { opacity: 0.7; }
+    100%     { opacity: 0; }
+  }
+  @keyframes scanShift {
+    from { transform: translateY(0); }
+    to   { transform: translateY(3px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .enter-overlay { animation-duration: 0.4s; }
+    .enter-text, .enter-sub, .enter-scanlines { animation: none; opacity: 0; }
+  }
 </style>
 </head>
 <body class="dark">
+
+<!-- 入场全屏特效 -->
+<div class="enter-overlay" id="enterOverlay">
+  <div class="enter-scanlines"></div>
+  <div class="enter-text" id="enterText">MIEMIE</div>
+  <div class="enter-sub" id="enterSub">ACCESS GRANTED</div>
+</div>
 
 <div class="quiz-app">
   <a href="/" class="quiz-back">← 返回</a>
@@ -478,6 +560,14 @@ permalink: /easter-egg/
   $('btnStart').addEventListener('click', startQuiz);
   $('btnRetry').addEventListener('click', startQuiz);
   $('btnShare').addEventListener('click', shareResult);
+
+  // 入场特效结束后移除覆盖层
+  var overlay = document.getElementById('enterOverlay');
+  if (overlay) {
+    setTimeout(function() {
+      overlay.style.display = 'none';
+    }, 2100);
+  }
 })();
 </script>
 

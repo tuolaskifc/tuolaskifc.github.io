@@ -222,7 +222,6 @@
       var target = document.querySelector('footer p');
       if (!target) return;
       var taps = 0, timer = null;
-      target.style.cursor = 'pointer';
       target.addEventListener('click', function() {
         taps++;
         clearTimeout(timer);
