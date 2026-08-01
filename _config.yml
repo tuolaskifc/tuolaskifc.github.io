@@ -26,3 +26,4 @@ defaults:
 exclude:
   - README.md
   - CNAME
+  - EASTER_EGG_DESIGN.md
