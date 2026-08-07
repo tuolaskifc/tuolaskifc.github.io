@@ -630,7 +630,6 @@ footer a:hover { text-decoration: underline; }
   inset: 0;
   z-index: 9999;
   overflow: hidden;
-  display: flex;
   align-items: center;
   justify-content: center;
   background: linear-gradient(162deg, #c9b99a 0%, #c9b99a 43.5%, #8b1a1a 43.5%, #8b1a1a 100%);
