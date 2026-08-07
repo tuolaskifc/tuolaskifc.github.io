@@ -1,16 +1,19 @@
 ---
 layout: default
 title: 刘阳 · AI4S
-lang: zh
+permalink: /en/
+lang: en
 ---
 
 <section class="hero">
   <div class="container">
     <div class="hero-avatar">🧪</div>
-    <h1>{{ site.author }}</h1>
-    <h2>清华大学 · 致理书院 · 化学大二</h2>
+    <h1>Liu Yang</h1>
+    <h2>Tsinghua University · Zhili College · Chemistry (Sophomore)</h2>
     <p>
-      探索 AI for Science 在化学中的可能性。关注计算化学、AI 驱动分子设计、机器学习力场等方向，希望能用数据驱动的方法加速科学发现。
+      Exploring AI for Science in chemistry. Interested in computational chemistry,
+      AI-driven molecular design, and machine-learned force fields — aiming to
+      accelerate scientific discovery with data-driven methods.
     </p>
     <div class="hero-socials">
       <a href="https://github.com/tuolaskifc" target="_blank" rel="noopener">
@@ -25,40 +28,46 @@ lang: zh
   </div>
 </section>
 
-<!-- 研究兴趣 -->
+<!-- Research Interests -->
 <section class="section-block container" id="research">
-  <h2 class="section-title">🔬 研究兴趣</h2>
+  <h2 class="section-title">🔬 Research Interests</h2>
   <div class="research-grid">
     <div class="research-card">
-      <h3>AI for Science — 计算化学方向</h3>
+      <h3>AI for Science — Computational Chemistry</h3>
       <p>
-        关注机器学习力场（MLFF）、密度泛函理论加速、增强采样等方向，探索如何用深度学习模型桥接量子化学计算与分子模拟的效率鸿沟。
+        Interested in machine-learned force fields (MLFF), accelerating DFT, and
+        enhanced sampling — bridging the efficiency gap between quantum chemistry
+        and molecular simulation with deep learning.
       </p>
     </div>
     <div class="research-card">
-      <h3>AI 驱动的分子设计与筛选</h3>
+      <h3>AI-Driven Molecular Design &amp; Screening</h3>
       <p>
-        利用生成模型、图神经网络和强化学习进行分子构象生成、性质预测与虚拟筛选，加速先导化合物发现与优化。
+        Using generative models, graph neural networks, and reinforcement learning
+        for molecular conformation generation, property prediction, and virtual
+        screening to accelerate hit discovery and optimization.
       </p>
     </div>
     <div class="research-card">
-      <h3>基础模型在化学中的应用</h3>
+      <h3>Foundation Models in Chemistry</h3>
       <p>
-        研究大规模预训练模型（如化学语言模型、3D 分子表征模型）在逆合成分析、反应预测、谱图解析等任务中的迁移能力与可解释性。
+        Studying how large-scale pretrained models (chemical language models,
+        3D molecular representations) transfer to retrosynthesis, reaction
+        prediction, and spectral analysis.
       </p>
     </div>
   </div>
 </section>
 
-<!-- 最新博客 -->
+<!-- Latest Posts -->
 <section class="section-block container" id="posts">
-  <h2 class="section-title">📝 最新文章</h2>
+  <h2 class="section-title">📝 Latest Posts</h2>
   <div class="post-list">
     {% for post in site.posts limit:5 %}
     <div class="post-card{% if post.private %} post-card-private{% endif %}" data-private="{{ post.private }}" onclick="location.href='{{ post.url | relative_url }}'">
       <div class="post-meta">
         <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
-        {% if post.private %}<span class="post-tag private-tag">🔒 私密</span>{% endif %}
+        {% if post.private %}<span class="post-tag private-tag">🔒 Private</span>{% endif %}
         {% if post.tags %}
         <span class="post-tag">{{ post.tags | first }}</span>
         {% endif %}
@@ -67,30 +76,31 @@ lang: zh
       <p>{{ post.excerpt | strip_html | normalize_whitespace | truncate: 120 }}</p>
     </div>
     {% else %}
-    <p style="color: var(--text-muted);">还没有文章，很快会来 🧪</p>
+    <p style="color: var(--text-muted);">No posts yet — coming soon 🧪</p>
     {% endfor %}
   </div>
 </section>
 
-<!-- 关于我 -->
+<!-- About -->
 <section class="section-block container" id="about">
-  <h2 class="section-title">🧑‍🔬 关于我</h2>
+  <h2 class="section-title">🧑‍🔬 About</h2>
   <div class="info-grid">
     <div class="info-block">
-      <h3>教育</h3>
-      <p class="edu-line">🎓 清华大学 · 致理书院 · 化学专业（大二）</p>
+      <h3>Education</h3>
+      <p class="edu-line">🎓 Tsinghua University · Zhili College · Chemistry (Sophomore)</p>
       <p class="about-text" style="margin-top: 8px;">
-        正在探索 AI + 化学的交叉方向，希望将机器学习和科学计算结合，为化学问题提供新的视角。
+        Exploring the intersection of AI and chemistry, combining machine learning
+        with scientific computing to bring new perspectives to chemistry.
       </p>
     </div>
     <div class="info-block">
-      <h3>技能 / 兴趣标签</h3>
+      <h3>Skills / Interests</h3>
       <ul class="tag-list">
-        <li>有机化学</li>
-        <li>无机化学</li>
-        <li>物理化学</li>
+        <li>Organic Chemistry</li>
+        <li>Inorganic Chemistry</li>
+        <li>Physical Chemistry</li>
         <li>RDKit</li>
-        <li>AI 波谱</li>
+        <li>AI Spectroscopy</li>
       </ul>
     </div>
   </div>

@@ -5,6 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{% if page.title %}{{ page.title }} · {{ site.author }}{% else %}{{ site.title }}{% endif %}</title>
   <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 }}">
+
+  <!-- Open Graph / 微信·QQ 分享卡片 -->
+  {% if page.private %}
+  <meta property="og:title" content="私密 · {{ page.title | default: site.title }}" />
+  <meta property="og:description" content="🔒 这篇文章是私密内容，暂不公开。" />
+  {% else %}
+  <meta property="og:title" content="{{ page.title | default: site.title }}" />
+  <meta property="og:description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 }}" />
+  {% endif %}
+  <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}" />
+  <meta property="og:url" content="{{ site.url }}{{ page.url | remove: 'index.html' }}" />
+  <meta property="og:image" content="{{ site.url }}/assets/images/og-card.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="{{ site.title }}" />
+  <meta property="og:locale" content="{% if page.lang == 'en' %}en_US{% else %}zh_CN{% endif %}" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{ page.title | default: site.title }}" />
+  <meta name="twitter:image" content="{{ site.url }}/assets/images/og-card.png" />
+  <link rel="canonical" href="{{ site.url }}{{ page.url | remove: 'index.html' }}" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Noto+Sans+SC:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
@@ -29,14 +50,14 @@
     <div class="splash-sub">LIU YANG</div>
     <button class="splash-btn" id="splashBtn">
       <svg class="splash-btn-icon" viewBox="0 0 18 18"><path d="M15.25 9.5L3.25 16.5V2.5L15.25 9.5Z"/></svg>
-      继续
+      <span id="splashBtnText">继续</span>
     </button>
   </div>
   <div class="splash-bottom">
-    <span>ESC 退出</span>
+    <span id="splashEscText">ESC 退出</span>
     <div class="splash-bottom-center">
       <button class="splash-theme-btn" id="splashThemeToggle">🌙</button>
-      <span class="splash-lang-btn">中/EN</span>
+      <a class="splash-lang-btn" id="splashLangBtn" href="{{ '/en/' | relative_url }}">EN</a>
     </div>
     <span>©2026 刘阳</span>
   </div>
@@ -44,11 +65,29 @@
 
 <script>
 (function() {
-  // Only show splash on the home page
-  if (window.location.pathname.replace(/\/$/, '') !== '' && window.location.pathname !== '/index.html') return;
+  // Only show splash on the home page (incl. English /en/)
+  var path = window.location.pathname.replace(/\/$/, '');
+  if (path !== '' && path !== '/index.html' && path !== '/en' && path !== '/en/index.html') return;
 
   const splash = document.getElementById('splash');
   if (!splash) return;
+
+  // Language button: point to the other language
+  var langBtn = document.getElementById('splashLangBtn');
+  var isEnHome = path === '/en' || path === '/en/index.html';
+  if (langBtn) {
+    if (isEnHome) {
+      langBtn.textContent = '中';
+      langBtn.href = '{{ '/' | relative_url }}';
+    } else {
+      langBtn.textContent = 'EN';
+      langBtn.href = '{{ '/en/' | relative_url }}';
+    }
+  }
+  var splashBtnText = document.getElementById('splashBtnText');
+  var splashEscText = document.getElementById('splashEscText');
+  if (splashBtnText) splashBtnText.textContent = isEnHome ? 'Enter' : '继续';
+  if (splashEscText) splashEscText.textContent = isEnHome ? 'ESC to leave' : 'ESC 退出';
 
   // 本次会话已经进入过网站 → 不再显示 splash
   if (sessionStorage.getItem('splashEntered')) {
@@ -111,12 +150,24 @@
       <a href="{{ '/' | relative_url }}" class="nav-brand">{{ site.author }}</a>
       <div class="nav-right">
         <div class="nav-links">
+          {% if page.lang == 'en' %}
+          <a href="{{ '/' | relative_url }}">Home</a>
+          <a href="{{ '/#research' | relative_url }}">Research</a>
+          <a href="{{ '/blog/' | relative_url }}">Blog</a>
+          <a href="{{ '/#about' | relative_url }}">About</a>
+          {% else %}
           <a href="{{ '/' | relative_url }}">首页</a>
           <a href="{{ '/#research' | relative_url }}">研究兴趣</a>
           <a href="{{ '/blog/' | relative_url }}">博客</a>
           <a href="{{ '/#about' | relative_url }}">关于</a>
+          {% endif %}
         </div>
         <button class="theme-toggle" id="themeToggle" aria-label="切换主题">🌙</button>
+        {% if page.lang == 'en' %}
+        <a class="theme-toggle lang-link" href="{{ '/' | relative_url }}" aria-label="切换中文">中</a>
+        {% else %}
+        <a class="theme-toggle lang-link" href="{{ '/en/' | relative_url }}" aria-label="Switch to English">EN</a>
+        {% endif %}
         <span class="admin-badge" id="adminBadge" style="display:none;">🔓 站长</span>
       </div>
     </div>

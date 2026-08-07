@@ -180,6 +180,15 @@ nav .container {
   transition: background 0.2s, border-color 0.2s;
 }
 .theme-toggle:hover { background: rgba(128,128,128,0.1); border-color: var(--accent); }
+.lang-link {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.lang-link:hover { color: var(--text); border-color: var(--accent); }
 
 /* ===== Hero ===== */
 .hero {
@@ -782,8 +791,18 @@ footer a:hover { text-decoration: underline; }
 }
 
 .splash-lang-btn {
-  cursor: default;
+  cursor: pointer;
   font-size: 0.75rem;
+  text-decoration: none;
+  color: rgba(255,255,255,0.5);
+  padding: 4px 8px;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 3px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.splash-lang-btn:hover {
+  color: rgba(255,255,255,0.9);
+  border-color: var(--accent);
 }
 
 /* ===== Splash Animations ===== */
