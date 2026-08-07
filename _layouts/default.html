@@ -168,6 +168,7 @@
       const KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
       const EASTER = ['i','l','o','v','e','c','h','e','n'];
       const APEX = ['a','p','e','x','l','e','g','e','n','d'];
+      const PLAY = ['p','l','a','y'];
 
       let buffer = [];
       let adminOn = sessionStorage.getItem('adminMode') === '1';
@@ -216,6 +217,11 @@
         // apexlegend → B站视频彩蛋
         else if (buffer.slice(-APEX.length).join(',') === APEX.join(',')) {
           window.location.href = '{{ '/easter-egg-apex/' | relative_url }}';
+          buffer = [];
+        }
+        // play → 小游戏合集
+        else if (buffer.slice(-PLAY.length).join(',') === PLAY.join(',')) {
+          window.location.href = '{{ '/play/' | relative_url }}';
           buffer = [];
         }
       });

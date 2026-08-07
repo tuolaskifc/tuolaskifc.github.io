@@ -1,0 +1,611 @@
+---
+layout: null
+permalink: /play/
+---
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>实验室 · MIEMIE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/style.css">
+<style>
+  body { margin: 0; }
+  .play-app {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+    position: relative;
+  }
+  .play-app::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+    background-size: 300px 300px;
+    opacity: 0.06;
+    mix-blend-mode: overlay;
+    z-index: 0;
+  }
+  .play-card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 520px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+    padding: 36px 32px;
+  }
+  .play-back {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    text-decoration: none;
+    z-index: 2;
+  }
+  .play-back:hover { color: var(--accent); }
+
+  /* ===== 游戏选择屏 ===== */
+  .game-screen { display: none; }
+  .game-screen.active { display: block; animation: fadeIn 0.4s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  .game-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .game-title {
+    font-family: 'Anton', 'Impact', sans-serif;
+    font-size: clamp(1.8rem, 5vw, 2.6rem);
+    letter-spacing: 0.06em;
+    text-align: center;
+    color: var(--sand);
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+  }
+  .game-sub {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+
+  .game-list { display: flex; flex-direction: column; gap: 12px; }
+  .game-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-align: left;
+    font-family: inherit;
+    width: 100%;
+  }
+  .game-card:hover {
+    border-color: var(--accent);
+    background: rgba(139,26,26,0.08);
+    transform: translateX(4px);
+  }
+  .game-card:active { transform: scale(0.99); }
+  .game-card-icon {
+    font-size: 1.8rem;
+    width: 44px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .game-card-info { flex: 1; }
+  .game-card-info h3 {
+    margin: 0 0 2px 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .game-card-info p {
+    margin: 0;
+    font-size: 0.78rem;
+    color: var(--text-light);
+  }
+
+  /* ===== 老虎机 ===== */
+  .slot-container { text-align: center; }
+  .slot-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .slot-title {
+    font-family: 'Anton', 'Impact', sans-serif;
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    letter-spacing: 0.06em;
+    color: var(--sand);
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+  }
+
+  .slot-machine {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .slot-reel {
+    width: 100px;
+    height: 140px;
+    border: 2px solid var(--border);
+    background: rgba(0,0,0,0.35);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+  .slot-reel-inner {
+    width: 100%;
+    text-align: center;
+    transition: filter 0.1s;
+  }
+  .slot-reel-inner.spinning { filter: blur(2.5px); }
+
+  .slot-item {
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+  }
+  .slot-symbol {
+    font-family: 'Anton', 'Impact', sans-serif;
+    font-size: 2rem;
+    line-height: 1.1;
+    color: var(--sand);
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+  }
+  .slot-symbol.rare { color: var(--accent); }
+  .slot-symbol.legendary { color: #d4af37; text-shadow: 0 0 12px rgba(212,175,55,0.5); }
+  .slot-name {
+    font-size: 0.6rem;
+    color: var(--text-light);
+    letter-spacing: 0.06em;
+    margin-top: 2px;
+  }
+
+  .slot-result {
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 14px 0 16px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    transition: all 0.3s;
+  }
+  .slot-result.hit {
+    color: var(--accent);
+    font-size: 1.1rem;
+    animation: resultPulse 0.5s ease;
+  }
+  .slot-result.jackpot {
+    color: #d4af37;
+    font-size: 1.3rem;
+    text-shadow: 0 0 20px rgba(212,175,55,0.4);
+    animation: resultPulse 0.5s ease;
+  }
+  @keyframes resultPulse {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.12); }
+    100% { transform: scale(1); }
+  }
+
+  .slot-btn {
+    display: inline-block;
+    padding: 12px 40px;
+    background: transparent;
+    border: 1.5px solid var(--accent);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.92rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .slot-btn:hover {
+    background: var(--accent);
+    color: #fff;
+  }
+  .slot-btn:active { transform: scale(0.97); }
+  .slot-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .slot-btn:disabled:hover { background: transparent; color: var(--text); }
+
+  .slot-score {
+    margin-top: 16px;
+    font-size: 0.78rem;
+    color: var(--text-light);
+    letter-spacing: 0.06em;
+  }
+  .slot-score span { color: var(--sand); font-weight: 600; }
+
+  .slot-back {
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    text-decoration: none;
+  }
+  .slot-back:hover { color: var(--accent); }
+
+  @media (max-width: 480px) {
+    .play-card { padding: 28px 16px; }
+    .slot-reel { width: 80px; height: 112px; }
+    .slot-item { height: 112px; }
+    .slot-symbol { font-size: 1.6rem; }
+    .slot-name { font-size: 0.5rem; }
+  }
+
+  /* ===== 入场特效 ===== */
+  .enter-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    animation: enterBg 2s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  .enter-scanlines {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(139,26,26,0.08) 0px,
+      rgba(139,26,26,0.08) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    pointer-events: none;
+    animation: scanShift 0.3s steps(3) infinite;
+  }
+  .enter-text {
+    font-family: 'Anton', 'Impact', sans-serif;
+    font-size: clamp(3rem, 14vw, 7rem);
+    letter-spacing: 0.18em;
+    color: #8b1a1a;
+    text-shadow: 0 0 30px rgba(139,26,26,0.6);
+    opacity: 0;
+    animation: enterText 2s ease forwards;
+    position: relative;
+  }
+  .enter-sub {
+    margin-top: 14px;
+    font-size: 0.8rem;
+    letter-spacing: 0.4em;
+    color: rgba(201,185,154,0.6);
+    opacity: 0;
+    animation: enterSub 2s ease forwards;
+  }
+  @keyframes enterBg {
+    0%   { background: #000; }
+    8%   { background: #8b1a1a; }
+    12%  { background: #000; }
+    18%  { background: #5a0f0f; }
+    22%  { background: #000; }
+    30%  { background: #000; }
+    100% { background: #000; opacity: 0; visibility: hidden; }
+  }
+  @keyframes enterText {
+    0%, 15% { opacity: 0; transform: scale(0.9); }
+    25%     { opacity: 1; transform: scale(1); }
+    60%     { opacity: 1; }
+    85%     { opacity: 0; transform: scale(1.1); }
+    100%    { opacity: 0; }
+  }
+  @keyframes enterSub {
+    0%, 30%  { opacity: 0; letter-spacing: 0.2em; }
+    45%      { opacity: 0.7; letter-spacing: 0.4em; }
+    70%      { opacity: 0.7; }
+    100%     { opacity: 0; }
+  }
+  @keyframes scanShift {
+    from { transform: translateY(0); }
+    to   { transform: translateY(3px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .enter-overlay { animation-duration: 0.4s; }
+    .enter-text, .enter-sub, .enter-scanlines { animation: none; opacity: 0; }
+  }
+</style>
+</head>
+<body class="dark">
+
+<!-- 入场全屏特效 -->
+<div class="enter-overlay" id="enterOverlay">
+  <div class="enter-scanlines"></div>
+  <div class="enter-text">MIEMIE</div>
+  <div class="enter-sub">LABORATORY</div>
+</div>
+
+<div class="play-app">
+  <a href="/" class="play-back">← 返回</a>
+  <div class="play-card">
+
+    <!-- 游戏选择屏 -->
+    <div class="game-screen active" id="screenMenu">
+      <div class="game-eyebrow">MIEMIE · 实验室</div>
+      <h1 class="game-title">小游戏合集</h1>
+      <p class="game-sub">选一个游戏，开始摸鱼 🧪</p>
+      <div class="game-list">
+        <button class="game-card" id="gotoSlot">
+          <div class="game-card-icon">🎰</div>
+          <div class="game-card-info">
+            <h3>化学老虎机</h3>
+            <p>拉下摇杆，元素连击赢大奖</p>
+          </div>
+        </button>
+        <!-- 未来游戏加在这里 -->
+      </div>
+    </div>
+
+    <!-- 老虎机屏 -->
+    <div class="game-screen" id="screenSlot">
+      <div class="slot-container">
+        <div class="slot-label">🎰 GAME 01</div>
+        <h2 class="slot-title">化学老虎机</h2>
+
+        <div class="slot-machine" id="slotMachine">
+          <div class="slot-reel" id="reel0">
+            <div class="slot-reel-inner" id="reelInner0"></div>
+          </div>
+          <div class="slot-reel" id="reel1">
+            <div class="slot-reel-inner" id="reelInner1"></div>
+          </div>
+          <div class="slot-reel" id="reel2">
+            <div class="slot-reel-inner" id="reelInner2"></div>
+          </div>
+        </div>
+
+        <div class="slot-result" id="slotResult">拉下摇杆试试手气</div>
+
+        <button class="slot-btn" id="slotSpin">🎰 SPIN</button>
+
+        <div class="slot-score">
+          💎 连击：<span id="slotStreak">0</span>
+          &nbsp;&nbsp;🏆 最高：<span id="slotBest">0</span>
+        </div>
+
+        <a href="#" class="slot-back" id="slotBack">← 返回游戏列表</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function() {
+  // ===== 化学物质池（转盘用）=====
+  const POOL = [
+    // 普通 (common) — 高概率
+    { symbol: 'H',   name: '氢',   rarity: 'common' },
+    { symbol: 'C',   name: '碳',   rarity: 'common' },
+    { symbol: 'O',   name: '氧',   rarity: 'common' },
+    { symbol: 'N',   name: '氮',   rarity: 'common' },
+    { symbol: 'Na',  name: '钠',   rarity: 'common' },
+    { symbol: 'Fe',  name: '铁',   rarity: 'common' },
+    { symbol: 'Si',  name: '硅',   rarity: 'common' },
+    { symbol: 'S',   name: '硫',   rarity: 'common' },
+    { symbol: 'P',   name: '磷',   rarity: 'common' },
+    { symbol: 'H₂O', name: '水',   rarity: 'common' },
+    // 稀有 (rare)
+    { symbol: 'Au',  name: '金',   rarity: 'rare' },
+    { symbol: 'Ag',  name: '银',   rarity: 'rare' },
+    { symbol: 'Pt',  name: '铂',   rarity: 'rare' },
+    { symbol: 'Hg',  name: '汞',   rarity: 'rare' },
+    { symbol: 'Cu',  name: '铜',   rarity: 'rare' },
+    { symbol: 'U',   name: '铀',   rarity: 'rare' },
+    // 传说 (legendary)
+    { symbol: '💎',  name: '钻石', rarity: 'legendary' },
+    { symbol: 'C₆₀', name: '富勒烯', rarity: 'legendary' },
+  ];
+
+  // 权重：common 4x, rare 2x, legendary 1x
+  function weightedPool() {
+    const result = [];
+    POOL.forEach(item => {
+      const w = item.rarity === 'common' ? 4 : item.rarity === 'rare' ? 2 : 1;
+      for (let i = 0; i < w; i++) result.push(item);
+    });
+    return result;
+  }
+
+  function randomItem() {
+    const pool = weightedPool();
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  // ===== 判定组合 =====
+  function judge(a, b, c) {
+    const syms = [a.symbol, b.symbol, c.symbol];
+    const rarities = [a.rarity, b.rarity, c.rarity];
+
+    // 三连传说
+    if (rarities.every(r => r === 'legendary')) {
+      return { text: '🌈 究极传说！三传说连击！', level: 'jackpot', score: 100 };
+    }
+    // 三连相同
+    if (syms[0] === syms[1] && syms[1] === syms[2]) {
+      if (rarities[0] === 'legendary') {
+        return { text: `🔥 传说三连！${a.symbol}！！`, level: 'jackpot', score: 80 };
+      }
+      if (rarities[0] === 'rare') {
+        return { text: `✨ 稀有三连！${a.symbol}！`, level: 'hit', score: 40 };
+      }
+      return { text: `⚡ 三连！${a.name}！`, level: 'hit', score: 20 };
+    }
+    // 两连相同
+    if (syms[0] === syms[1] || syms[1] === syms[2] || syms[0] === syms[2]) {
+      let pair, third;
+      if (syms[0] === syms[1]) { pair = a; third = c; }
+      else if (syms[1] === syms[2]) { pair = b; third = a; }
+      else { pair = a; third = b; }
+
+      if (pair.rarity === 'legendary') {
+        return { text: `🌟 传说成对！${pair.symbol} 与 ${third.symbol}`, level: 'hit', score: 15 };
+      }
+      return { text: `👍 ${pair.name} 成对！`, level: 'normal', score: 5 };
+    }
+    // 三稀有/传说
+    if (rarities.every(r => r !== 'common')) {
+      return { text: '🔮 全稀有阵容！', level: 'normal', score: 8 };
+    }
+    // 无
+    return { text: '❌ 再试一次', level: 'none', score: 0 };
+  }
+
+  // ===== DOM refs =====
+  const screens = {
+    menu: document.getElementById('screenMenu'),
+    slot: document.getElementById('screenSlot'),
+  };
+  const reelInners = [
+    document.getElementById('reelInner0'),
+    document.getElementById('reelInner1'),
+    document.getElementById('reelInner2'),
+  ];
+  const slotResult = document.getElementById('slotResult');
+  const spinBtn = document.getElementById('slotSpin');
+  const streakEl = document.getElementById('slotStreak');
+  const bestEl = document.getElementById('slotBest');
+
+  let isSpinning = false;
+  let streak = 0;
+  let best = 0;
+
+  // ===== 渲染转盘 =====
+  function buildReelHTML(item) {
+    const cls = item.rarity === 'legendary' ? 'legendary' : item.rarity === 'rare' ? 'rare' : '';
+    return `<div class="slot-item">
+      <div class="slot-symbol ${cls}">${item.symbol}</div>
+      <div class="slot-name">${item.name}</div>
+    </div>`;
+  }
+
+  function setReel(index, item) {
+    reelInners[index].innerHTML = buildReelHTML(item);
+    reelInners[index].classList.remove('spinning');
+  }
+
+  // 转盘初始状态
+  function initReels() {
+    for (let i = 0; i < 3; i++) setReel(i, randomItem());
+  }
+  initReels();
+
+  // ===== 旋转动画（JS 高频换内容 + 减速停靠）=====
+  function spin() {
+    if (isSpinning) return;
+    isSpinning = true;
+    spinBtn.disabled = true;
+    slotResult.textContent = '🎰 转动中...';
+    slotResult.className = 'slot-result';
+
+    const results = [null, null, null];
+    let stopped = 0;
+
+    // 每列独立 interval，高频换内容
+    function startReel(reelIdx, stopDelay) {
+      const inner = reelInners[reelIdx];
+      inner.classList.add('spinning');
+
+      const interval = setInterval(() => {
+        inner.innerHTML = buildReelHTML(randomItem());
+      }, 60);
+
+      setTimeout(() => {
+        clearInterval(interval);
+        const final = randomItem();
+        results[reelIdx] = final;
+        inner.innerHTML = buildReelHTML(final);
+        inner.classList.remove('spinning');
+
+        stopped++;
+        if (stopped === 3) {
+          const j = judge(results[0], results[1], results[2]);
+          slotResult.textContent = j.text;
+          slotResult.className = 'slot-result ' + (j.level === 'jackpot' ? 'jackpot' : j.level === 'hit' ? 'hit' : '');
+
+          if (j.score > 0) {
+            streak += j.score;
+          } else {
+            streak = 0;
+          }
+          if (streak > best) best = streak;
+          streakEl.textContent = streak;
+          bestEl.textContent = best;
+
+          isSpinning = false;
+          spinBtn.disabled = false;
+        }
+      }, stopDelay);
+    }
+
+    // 逐列停止：400ms / 800ms / 1200ms
+    startReel(0, 400);
+    startReel(1, 800);
+    startReel(2, 1200);
+  }
+
+  // ===== 事件绑定 =====
+  document.getElementById('gotoSlot').addEventListener('click', () => {
+    screens.menu.classList.remove('active');
+    screens.slot.classList.add('active');
+  });
+
+  document.getElementById('slotBack').addEventListener('click', (e) => {
+    e.preventDefault();
+    screens.slot.classList.remove('active');
+    screens.menu.classList.add('active');
+  });
+
+  spinBtn.addEventListener('click', spin);
+
+  // ===== 入场特效移除 =====
+  const overlay = document.getElementById('enterOverlay');
+  if (overlay) {
+    setTimeout(() => { overlay.style.display = 'none'; }, 2100);
+  }
+})();
+</script>
+</body>
+</html>
