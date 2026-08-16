@@ -9,14 +9,6 @@ lang: zh-CN
 markdown: kramdown
 permalink: /blog/:year/:month/:day/:title/
 
-# 分页插件（必须声明才能用 paginator）
-plugins:
-  - jekyll-paginate
-
-# 文章分页
-paginate: 10
-paginate_path: "/page:num/"
-
 # 默认 YAML Front Matter
 defaults:
   - scope:

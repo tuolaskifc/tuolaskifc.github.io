@@ -223,4 +223,5 @@ mathjax: true        # 需要公式就加上
 |------|------|
 | 2026-08-08 | 本文件创建。记录当前网站全部结构。此前已有：play 彩蛋页、OG 分享卡片、英文版首页 |
 | 2026-08-08 | `post.html` 改为继承 `default` 布局：文章页获得彩蛋触发、站长模式、语言切换、OG meta，与主页功能一致（修复已知问题 1） |
-| 2026-08-08 | 修复 splash 在非首页页面误显示：`.splash` CSS 中重复的 `display:flex` 覆盖了 `display:none`，导致博客/文章页 splash 一直弹出且"继续"无反应。删除重复声明后 splash 仅首页显示 |
+| 2026-08-08 | 修复 splash 在非首页页面误显示：`.splash` CSS 中重复的 `display:flex` 覆盖了 `display:none`，删除后 splash 仅首页显示 |
+| 2026-08-08 | 博客列表页改用 `site.posts`（`paginator` 在子目录不生效），删除 `_config.yml` 中分页配置；添加试管 SVG favicon + ICO 备用 |
