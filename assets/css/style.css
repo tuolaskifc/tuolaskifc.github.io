@@ -1,31 +1,32 @@
 /* ===== APEX Legends 主题 CSS 变量 ===== */
 :root {
-  --bg: #0a0a0a;
-  --bg-secondary: #11100e;
-  --text: #e8dcc8;
-  --text-secondary: #a09888;
-  --text-muted: #706860;
-  --text-light: #585048;
-  --nav-bg: rgba(10,10,10,0.96);
-  --border: #2a2620;
-  --border-soft: #1e1c18;
-  --card-bg: #12110e;
-  --card-border: #2a2620;
-  --card-border-hover: #8b1a1a;
-  --tag-bg: #1a1714;
-  --tag-text: #c9b99a;
-  --tag-border: #2a2620;
-  --hover-bg: #8b1a1a;
-  --hover-text: #f0e8d8;
-  --code-bg: #161410;
-  --blockquote-border: #8b1a1a;
-  --card-shadow: 0 2px 8px rgba(0,0,0,0.3);
-  --card-shadow-hover: 0 6px 24px rgba(139,26,26,0.15);
-  --accent: #8b1a1a;
-  --accent-hover: #b52b2b;
-  --sand: #c9b99a;
-  --hero-bg-start: #0a0a0a;
-  --hero-bg-end: #11100e;
+  --bg: #08070a;
+  --bg-secondary: #13100e;
+  --text: #ece2d0;
+  --text-secondary: #a99a8a;
+  --text-muted: #74685c;
+  --text-light: #5c5248;
+  --nav-bg: rgba(8,7,10,0.96);
+  --border: #2b2622;
+  --border-soft: #1f1c18;
+  --card-bg: #141110;
+  --card-border: #2b2622;
+  --card-border-hover: #b52b2b;
+  --tag-bg: #1b1815;
+  --tag-text: #d8c9a3;
+  --tag-border: #2b2622;
+  --hover-bg: #b52b2b;
+  --hover-text: #f5efe2;
+  --code-bg: #171512;
+  --blockquote-border: #b52b2b;
+  --card-shadow: 0 2px 8px rgba(0,0,0,0.35);
+  --card-shadow-hover: 0 6px 24px rgba(181,43,43,0.18);
+  --accent: #b52b2b;
+  --accent-hover: #d1362f;
+  --accent-grad: linear-gradient(135deg, #e8442e 0%, #b52b2b 55%, #6e1414 100%);
+  --sand: #d8c9a3;
+  --hero-bg-start: #08070a;
+  --hero-bg-end: #141110;
 }
 
 /* Light mode toggle — keeps APEX spirit but lighter */
@@ -41,71 +42,71 @@ body.light {
   --border-soft: #d8d0c0;
   --card-bg: #f0e8d8;
   --card-border: #c8c0b0;
-  --card-border-hover: #8b1a1a;
+  --card-border-hover: #b52b2b;
   --tag-bg: #e0d8c8;
-  --tag-text: #5a5248;
+  --tag-text: #7a5f33;
   --tag-border: #c8c0b0;
-  --hover-bg: #8b1a1a;
-  --hover-text: #f0e8d8;
+  --hover-bg: #b52b2b;
+  --hover-text: #f5efe2;
   --code-bg: #e0d8c8;
-  --blockquote-border: #8b1a1a;
+  --blockquote-border: #b52b2b;
   --card-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  --card-shadow-hover: 0 6px 24px rgba(139,26,26,0.1);
+  --card-shadow-hover: 0 6px 24px rgba(181,43,43,0.12);
   --hero-bg-start: #e8e0d0;
   --hero-bg-end: #d8d0c0;
 }
 
 body.dark {
-  --bg: #0a0a0a;
-  --bg-secondary: #11100e;
-  --text: #e8dcc8;
-  --text-secondary: #a09888;
-  --text-muted: #706860;
-  --text-light: #585048;
-  --nav-bg: rgba(10,10,10,0.96);
-  --border: #2a2620;
-  --border-soft: #1e1c18;
-  --card-bg: #12110e;
-  --card-border: #2a2620;
-  --card-border-hover: #8b1a1a;
-  --tag-bg: #1a1714;
-  --tag-text: #c9b99a;
-  --tag-border: #2a2620;
-  --hover-bg: #8b1a1a;
-  --hover-text: #f0e8d8;
-  --code-bg: #161410;
-  --blockquote-border: #8b1a1a;
-  --card-shadow: 0 2px 8px rgba(0,0,0,0.3);
-  --card-shadow-hover: 0 6px 24px rgba(139,26,26,0.15);
-  --hero-bg-start: #0a0a0a;
-  --hero-bg-end: #11100e;
+  --bg: #08070a;
+  --bg-secondary: #13100e;
+  --text: #ece2d0;
+  --text-secondary: #a99a8a;
+  --text-muted: #74685c;
+  --text-light: #5c5248;
+  --nav-bg: rgba(8,7,10,0.96);
+  --border: #2b2622;
+  --border-soft: #1f1c18;
+  --card-bg: #141110;
+  --card-border: #2b2622;
+  --card-border-hover: #b52b2b;
+  --tag-bg: #1b1815;
+  --tag-text: #d8c9a3;
+  --tag-border: #2b2622;
+  --hover-bg: #b52b2b;
+  --hover-text: #f5efe2;
+  --code-bg: #171512;
+  --blockquote-border: #b52b2b;
+  --card-shadow: 0 2px 8px rgba(0,0,0,0.35);
+  --card-shadow-hover: 0 6px 24px rgba(181,43,43,0.18);
+  --hero-bg-start: #08070a;
+  --hero-bg-end: #141110;
 }
 
 @media (prefers-color-scheme: dark) {
   body:not(.light):not(.dark) {
-    --bg: #0a0a0a;
-    --bg-secondary: #11100e;
-    --text: #e8dcc8;
-    --text-secondary: #a09888;
-    --text-muted: #706860;
-    --text-light: #585048;
-    --nav-bg: rgba(10,10,10,0.96);
-    --border: #2a2620;
-    --border-soft: #1e1c18;
-    --card-bg: #12110e;
-    --card-border: #2a2620;
-    --card-border-hover: #8b1a1a;
-    --tag-bg: #1a1714;
-    --tag-text: #c9b99a;
-    --tag-border: #2a2620;
-    --hover-bg: #8b1a1a;
-    --hover-text: #f0e8d8;
-    --code-bg: #161410;
-    --blockquote-border: #8b1a1a;
-    --card-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    --card-shadow-hover: 0 6px 24px rgba(139,26,26,0.15);
-    --hero-bg-start: #0a0a0a;
-    --hero-bg-end: #11100e;
+    --bg: #08070a;
+    --bg-secondary: #13100e;
+    --text: #ece2d0;
+    --text-secondary: #a99a8a;
+    --text-muted: #74685c;
+    --text-light: #5c5248;
+    --nav-bg: rgba(8,7,10,0.96);
+    --border: #2b2622;
+    --border-soft: #1f1c18;
+    --card-bg: #141110;
+    --card-border: #2b2622;
+    --card-border-hover: #b52b2b;
+    --tag-bg: #1b1815;
+    --tag-text: #d8c9a3;
+    --tag-border: #2b2622;
+    --hover-bg: #b52b2b;
+    --hover-text: #f5efe2;
+    --code-bg: #171512;
+    --blockquote-border: #b52b2b;
+    --card-shadow: 0 2px 8px rgba(0,0,0,0.35);
+    --card-shadow-hover: 0 6px 24px rgba(181,43,43,0.18);
+    --hero-bg-start: #08070a;
+    --hero-bg-end: #141110;
   }
 }
 
@@ -196,6 +197,21 @@ nav .container {
   text-align: center;
   background: linear-gradient(180deg, var(--hero-bg-start) 0%, var(--bg-secondary) 100%);
   position: relative;
+  overflow: hidden;
+}
+/* Raycast 招牌：顶部红色渐变斜条纹 */
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 6px;
+  background: repeating-linear-gradient(
+    100deg,
+    #e8442e 0px, #e8442e 10px,
+    #8a1a1a 10px, #8a1a1a 20px,
+    #e8442e 20px, #e8442e 30px
+  );
+  z-index: 2;
 }
 .hero::before {
   content: '';
@@ -632,7 +648,7 @@ footer a:hover { text-decoration: underline; }
   overflow: hidden;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(162deg, #c9b99a 0%, #c9b99a 43.5%, #8b1a1a 43.5%, #8b1a1a 100%);
+  background: linear-gradient(162deg, #d8c9a3 0%, #d8c9a3 43.5%, #b52b2b 43.5%, #8a1a1a 100%);
   font-family: 'Inter', 'Noto Sans SC', sans-serif;
   cursor: default;
   opacity: 1;
@@ -676,7 +692,7 @@ footer a:hover { text-decoration: underline; }
   color: #1c1c1c;
   position: relative;
   text-shadow:
-    3px 3px 0 #0a0a0a,
+    3px 3px 0 #08070a,
     -1px -1px 0 #3a3a3a,
     5px 5px 15px rgba(0,0,0,0.35);
   opacity: 0;

@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="6" fill="#0a0a0a"/>
+  <rect width="32" height="32" rx="6" fill="#08070a"/>
   <!-- 试管底部圆角 -->
-  <path d="M12 4h8v14.5a5 5 0 0 1-4 4.9V4z" fill="none" stroke="#c9b99a" stroke-width="1.3"/>
-  <path d="M12 4h8v14.5a5 5 0 0 1-4 4.9 5 5 0 0 1-4-4.9V4z" fill="none" stroke="#c9b99a" stroke-width="1.3"/>
+  <path d="M12 4h8v14.5a5 5 0 0 1-4 4.9V4z" fill="none" stroke="#d8c9a3" stroke-width="1.3"/>
+  <path d="M12 4h8v14.5a5 5 0 0 1-4 4.9 5 5 0 0 1-4-4.9V4z" fill="none" stroke="#d8c9a3" stroke-width="1.3"/>
   <!-- 试管口 -->
-  <rect x="11.5" y="2.5" width="9" height="2.5" rx="1" fill="none" stroke="#c9b99a" stroke-width="1.2"/>
+  <rect x="11.5" y="2.5" width="9" height="2.5" rx="1" fill="none" stroke="#d8c9a3" stroke-width="1.2"/>
   <!-- 绿色液体 -->
   <path d="M12.7 16h6.6a5 5 0 0 1-3.3 3.8 5 5 0 0 1-3.3-3.8z" fill="#4CAF50" opacity="0.9"/>
   <!-- 气泡 -->

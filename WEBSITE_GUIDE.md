@@ -224,4 +224,5 @@ mathjax: true        # 需要公式就加上
 | 2026-08-08 | 本文件创建。记录当前网站全部结构。此前已有：play 彩蛋页、OG 分享卡片、英文版首页 |
 | 2026-08-08 | `post.html` 改为继承 `default` 布局：文章页获得彩蛋触发、站长模式、语言切换、OG meta，与主页功能一致（修复已知问题 1） |
 | 2026-08-08 | 修复 splash 在非首页页面误显示：`.splash` CSS 中重复的 `display:flex` 覆盖了 `display:none`，删除后 splash 仅首页显示 |
+| 2026-08-23 | 配色升级（方案 A·APEX 战魂，参考 Raycast 设计系统）：纯黑 `#08070a`、艳红 `#b52b2b`、沙金提亮 `#d8c9a3`；hero 顶部加红色斜条纹；OG 卡片与 favicon 配色同步 |
 | 2026-08-08 | 博客列表页改用 `site.posts`（`paginator` 在子目录不生效），删除 `_config.yml` 中分页配置；添加试管 SVG favicon + ICO 备用 |
