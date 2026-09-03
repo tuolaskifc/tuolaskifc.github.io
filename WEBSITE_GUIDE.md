@@ -44,10 +44,10 @@ personal-website/
 │   ├── default.html        # 主布局：splash + nav + 全部彩蛋触发 + 主题/语言
 │   └── post.html           # 文章页布局（继承 default，支持 course 课程徽章）
 ├── _posts/                 # 博客文章（文件名 = 日期-标题，front matter 控制可见性）
+│   ├── 2026-01-01-welcome.md                           # 公开 · 置底（显示「26春」）
 │   ├── 2026-06-12-umpolung.md                          # 公开 · 有机化学H1研讨课（course 徽章）
 │   ├── 2026-07-20-ai4s-compound-c-nmr-analysis.md      # 公开 · AI4S交叉实践课（course 徽章）
-│   ├── 2026-08-26-browser-plugins.md                   # 公开 · 咪咕/爱奇艺防剧透插件分享
-│   └── 2026-09-03-welcome.md                           # 公开 · 置顶：站点说明与格式示例
+│   └── 2026-08-26-browser-plugins.md                   # 公开 · 咪咕/爱奇艺防剧透插件分享
 ├── assets/
 │   ├── css/style.css       # 全站样式（主题变量、splash、卡片、彩蛋样式）
 │   └── images/
@@ -234,5 +234,6 @@ mathjax: true        # 需要公式就加上
 | 2026-09-03 | 首页板块「研究兴趣」→「兴趣与展望」：3 张高深卡片改为 2 块务实内容（出国深造 / 用计算与 AI 解决化学），hero 简介同步收敛；板块锚点 `#research` → `#interests`，导航文案同步；卡片 grid 支持自动两列 |
 | 2026-09-03 | 技能标签更新（中英同步）：去 RDKit/AI波谱，加 C/Python/机器学习/Vibe Coding/计算化学；新增文章页 `course` 字段 → 显示 🎓 课程徽章；极性反转文章转公开并改期 6-12（标注有机化学H1研讨课）；NMR 文章标注 AI4S 交叉实践课；新增插件分享文章（8-26） |
 | 2026-09-03 | 配色系统重构（克制红黑 + 白灰）：删沙金 `--sand` → 新 `--bright` 白灰高光；红收敛为单族 `--accent`/`--accent-deep`/`--accent-grad`；背景灰阶拉开（bg 0a0a0a → card 16161a → tag 1d1d22）；hero 斜纹/splash/OG卡/favicon/彩蛋页全部同步新色 |
-| 2026-09-03 | 插件分享文章补充：看球 + 切尔西球迷 + 上架 Edge 商店；新增 `date_display` 字段支持自定义日期显示（暂无文章使用） |
+| 2026-09-03 | 插件分享文章补充：看球 + 切尔西球迷 + 上架 Edge 商店；新增 `date_display` 字段支持自定义日期显示 |
 | 2026-09-03 | 「我的第一篇博客」改名 + 日期改 9-03（置顶）；浅色模式配色调暖（去刺眼冷白，改 #efece4 暖灰白 + 米色卡面）；撤销插件文章的 `date_display` 误改 |
+| 2026-09-03 | 「我的第一篇博客」改放最底：日期 9-03→1-01（最早），`date_display: 26春` 模糊显示；列表顺序变为 插件 → NMR → 极性反转 → 我的第一篇博客 |
