@@ -75,7 +75,7 @@ permalink: /easter-egg/
     font-size: clamp(1.8rem, 5vw, 2.6rem);
     letter-spacing: 0.06em;
     text-align: center;
-    color: var(--sand);
+    color: var(--bright);
     margin-bottom: 14px;
     text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
   }
@@ -155,7 +155,7 @@ permalink: /easter-egg/
   .quiz-option:hover {
     border-color: var(--accent);
     color: var(--text);
-    background: rgba(139,26,26,0.08);
+    background: rgba(224,68,56,0.08);
   }
 
   /* ===== 结果屏 ===== */
@@ -172,8 +172,8 @@ permalink: /easter-egg/
     font-size: clamp(5rem, 18vw, 8rem);
     line-height: 1;
     text-align: center;
-    color: var(--sand);
-    text-shadow: 3px 3px 12px rgba(0,0,0,0.6), 0 0 30px rgba(139,26,26,0.3);
+    color: var(--bright);
+    text-shadow: 3px 3px 12px rgba(0,0,0,0.6), 0 0 30px rgba(224,68,56,0.3);
     margin: 8px 0 4px;
     animation: symbolIn 0.7s cubic-bezier(0.16,1,0.3,1);
   }
@@ -211,7 +211,7 @@ permalink: /easter-egg/
     margin-bottom: 18px;
     padding: 14px 16px;
     border-left: 3px solid var(--accent);
-    background: rgba(139,26,26,0.05);
+    background: rgba(224,68,56,0.05);
   }
   .result-fact {
     font-size: 0.82rem;
@@ -222,7 +222,7 @@ permalink: /easter-egg/
     background: var(--code-bg);
     border: 1px solid var(--border);
   }
-  .result-fact strong { color: var(--sand); letter-spacing: 0.04em; }
+  .result-fact strong { color: var(--bright); letter-spacing: 0.04em; }
   .result-actions { display: flex; gap: 10px; }
   .result-actions .quiz-btn { flex: 1; }
 
@@ -250,8 +250,8 @@ permalink: /easter-egg/
     inset: 0;
     background: repeating-linear-gradient(
       0deg,
-      rgba(139,26,26,0.08) 0px,
-      rgba(139,26,26,0.08) 1px,
+      rgba(224,68,56,0.08) 0px,
+      rgba(224,68,56,0.08) 1px,
       transparent 1px,
       transparent 3px
     );
@@ -262,8 +262,8 @@ permalink: /easter-egg/
     font-family: 'Anton', 'Impact', sans-serif;
     font-size: clamp(3rem, 14vw, 7rem);
     letter-spacing: 0.18em;
-    color: #8b1a1a;
-    text-shadow: 0 0 30px rgba(139,26,26,0.6);
+    color: #e04438;
+    text-shadow: 0 0 30px rgba(224,68,56,0.6);
     opacity: 0;
     animation: enterText 2s ease forwards;
     position: relative;
@@ -272,15 +272,15 @@ permalink: /easter-egg/
     margin-top: 14px;
     font-size: 0.8rem;
     letter-spacing: 0.4em;
-    color: rgba(201,185,154,0.6);
+    color: rgba(220,220,226,0.6);
     opacity: 0;
     animation: enterSub 2s ease forwards;
   }
   @keyframes enterBg {
     0%   { background: #000; }
-    8%   { background: #8b1a1a; }
+    8%   { background: #e04438; }
     12%  { background: #000; }
-    18%  { background: #5a0f0f; }
+    18%  { background: #7a1712; }
     22%  { background: #000; }
     30%  { background: #000; }
     100% { background: #000; opacity: 0; visibility: hidden; }

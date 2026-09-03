@@ -176,10 +176,11 @@ personal-website/
 ## 七、主题与样式体系
 
 - 主题变量在 `assets/css/style.css` 顶部 `:root`（暗色）+ `.light` 覆盖（亮色）
-- 关键变量：`--bg:#0a0a0a` `--accent:#8b1a1a` `--sand:#c9b99a` `--text:#e8dcc8` 等
+- **克制红黑 + 白灰**配色：画布 `--bg:#0a0a0a`，主红 `--accent:#e04438`（配 `--accent-deep`/`--accent-grad` 组成一族），白灰高光 `--bright:#dcdce2`；背景灰阶逐层拉开（bg → card → tag），文字五级灰（text → text-light）
+- splash 入场屏用固定色（浅 `#e8e6e6` → 红渐变），不随主题变量变，保证深色 logo 始终可见
 - 默认跟随系统深浅色，用户手动切换后记忆在 `localStorage['theme']`
 - 字体：Anton（标题）/ Inter / Noto Sans SC / Fira Code
-- 彩蛋页自带独立 `<style>` 块，不依赖主 style.css
+- 彩蛋页自带独立 `<style>` 块，但色值已与主站统一（红族/白灰），不依赖主 style.css 变量也能协调
 
 ---
 
@@ -231,3 +232,4 @@ mathjax: true        # 需要公式就加上
 | 2026-09-03 | 部署方式统一：删除 `jekyll.yml` Actions workflow，改用 GitHub Pages legacy 构建（原 workflow 因"下划线目录"误判而多余，与 legacy 双构建冲突） |
 | 2026-09-03 | 首页板块「研究兴趣」→「兴趣与展望」：3 张高深卡片改为 2 块务实内容（出国深造 / 用计算与 AI 解决化学），hero 简介同步收敛；板块锚点 `#research` → `#interests`，导航文案同步；卡片 grid 支持自动两列 |
 | 2026-09-03 | 技能标签更新（中英同步）：去 RDKit/AI波谱，加 C/Python/机器学习/Vibe Coding/计算化学；新增文章页 `course` 字段 → 显示 🎓 课程徽章；极性反转文章转公开并改期 6-12（标注有机化学H1研讨课）；NMR 文章标注 AI4S 交叉实践课；新增插件分享文章（8-26） |
+| 2026-09-03 | 配色系统重构（克制红黑 + 白灰）：删沙金 `--sand` → 新 `--bright` 白灰高光；红收敛为单族 `--accent`/`--accent-deep`/`--accent-grad`；背景灰阶拉开（bg 0a0a0a → card 16161a → tag 1d1d22）；hero 斜纹/splash/OG卡/favicon/彩蛋页全部同步新色 |
