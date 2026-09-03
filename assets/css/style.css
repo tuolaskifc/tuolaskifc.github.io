@@ -317,7 +317,11 @@ nav .container {
 .section-block + .section-block { border-top: 1px solid var(--border); }
 
 /* ===== 研究方向卡片 ===== */
-.research-grid { display: grid; gap: 16px; }
+.research-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
 .research-card {
   padding: 24px 28px;
   border: 1px solid var(--card-border);

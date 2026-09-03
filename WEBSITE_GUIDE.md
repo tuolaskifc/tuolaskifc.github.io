@@ -64,9 +64,9 @@ personal-website/
 
 | URL | 文件 | 布局 | 可见性 | 说明 |
 |-----|------|------|--------|------|
-| `/` | index.html | default | 公开 | 中文首页：hero + 研究兴趣 + 最新文章 + 关于 |
+| `/` | index.html | default | 公开 | 中文首页：hero + 兴趣与展望 + 最新文章 + 关于 |
 | `/en/` | index-en.html | default | 公开 | 英文首页（内容英文化） |
-| `/blog/` | blog/index.html | default | 公开 | 博客列表（分页），私密文章默认隐藏 |
+| `/blog/` | blog/index.html | default | 公开 | 博客列表（`site.posts` 全量列出），私密文章默认隐藏 |
 | `/blog/:year/:month/:day/:title/` | _posts/*.md | post | 按 front matter | 文章页 |
 | `/easter-egg/` | easter-egg.html | 无(null) | 彩蛋 | 化学人格鉴定游戏 |
 | `/easter-egg-apex/` | easter-egg-apex.html | 无(null) | 彩蛋 | B站视频合集 |
@@ -92,7 +92,7 @@ personal-website/
 | 交互 | 触发 | 效果 |
 |------|------|------|
 | 品牌名 | 点击 | 回首页 `/` |
-| 首页/研究兴趣/博客/关于 | 点击 | 跳转（英文版显示 Home/Research/Blog/About） |
+| 首页/兴趣与展望/博客/关于 | 点击 | 跳转（英文版显示 Home/Interests/Blog/About） |
 | 主题切换 🌙/☀️ | 点击 | 全局深/浅色切换，记忆在 localStorage |
 | 语言切换 EN/中 | 点击 | 中英文首页互跳 |
 | 站长徽章 🔓站长 | 仅站长模式 | 显示在 nav 右侧，普通访客看不到 |
@@ -224,6 +224,7 @@ mathjax: true        # 需要公式就加上
 | 2026-08-08 | 本文件创建。记录当前网站全部结构。此前已有：play 彩蛋页、OG 分享卡片、英文版首页 |
 | 2026-08-08 | `post.html` 改为继承 `default` 布局：文章页获得彩蛋触发、站长模式、语言切换、OG meta，与主页功能一致（修复已知问题 1） |
 | 2026-08-08 | 修复 splash 在非首页页面误显示：`.splash` CSS 中重复的 `display:flex` 覆盖了 `display:none`，删除后 splash 仅首页显示 |
+| 2026-08-08 | 博客列表页改用 `site.posts`（`paginator` 在子目录不生效），删除 `_config.yml` 中分页配置；添加试管 SVG favicon + ICO 备用 |
 | 2026-08-23 | 配色升级（方案 A·APEX 战魂，参考 Raycast 设计系统）：纯黑 `#08070a`、艳红 `#b52b2b`、沙金提亮 `#d8c9a3`；hero 顶部加红色斜条纹；OG 卡片与 favicon 配色同步 |
 | 2026-09-03 | 部署方式统一：删除 `jekyll.yml` Actions workflow，改用 GitHub Pages legacy 构建（原 workflow 因"下划线目录"误判而多余，与 legacy 双构建冲突） |
-| 2026-08-08 | 博客列表页改用 `site.posts`（`paginator` 在子目录不生效），删除 `_config.yml` 中分页配置；添加试管 SVG favicon + ICO 备用 |
+| 2026-09-03 | 首页板块「研究兴趣」→「兴趣与展望」：3 张高深卡片改为 2 块务实内容（出国深造 / 用计算与 AI 解决化学），hero 简介同步收敛；板块锚点 `#research` → `#interests`，导航文案同步；卡片 grid 支持自动两列 |
