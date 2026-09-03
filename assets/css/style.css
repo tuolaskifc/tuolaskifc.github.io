@@ -33,24 +33,24 @@
 
 /* Light mode toggle — keeps APEX spirit but lighter */
 body.light {
-  --bg: #f6f6f7;
-  --bg-secondary: #ebebee;
-  --text: #1c1c22;
-  --text-secondary: #55555e;
-  --text-muted: #86868f;
-  --text-light: #adadb5;
-  --nav-bg: rgba(246,246,247,0.95);
-  --border: #d8d8de;
-  --border-soft: #e4e4e8;
-  --card-bg: #ffffff;
-  --card-border: #d8d8de;
+  --bg: #efece4;
+  --bg-secondary: #e6e2d8;
+  --text: #1f1d1a;
+  --text-secondary: #5b554c;
+  --text-muted: #8a8478;
+  --text-light: #aaa499;
+  --nav-bg: rgba(239,236,228,0.95);
+  --border: #d4cfbf;
+  --border-soft: #dfdac8;
+  --card-bg: #f7f4ec;
+  --card-border: #d4cfbf;
   --card-border-hover: #d63a2e;
-  --tag-bg: #e9e9ed;
-  --tag-text: #3f3f47;
-  --tag-border: #d8d8de;
+  --tag-bg: #e3dfd1;
+  --tag-text: #47443c;
+  --tag-border: #d4cfbf;
   --hover-bg: #d63a2e;
   --hover-text: #ffffff;
-  --code-bg: #ededf0;
+  --code-bg: #ebe7d9;
   --blockquote-border: #d63a2e;
   --card-shadow: 0 2px 8px rgba(0,0,0,0.05);
   --card-shadow-hover: 0 8px 24px rgba(214,58,46,0.12);
@@ -58,9 +58,9 @@ body.light {
   --accent-hover: #e85040;
   --accent-deep: #8f1d12;
   --accent-grad: linear-gradient(135deg, #ff5c44 0%, #d63a2e 55%, #8f1d12 100%);
-  --bright: #2c2c33;
-  --hero-bg-start: #f6f6f7;
-  --hero-bg-end: #ececef;
+  --bright: #3a352d;
+  --hero-bg-start: #efece4;
+  --hero-bg-end: #e8e3d4;
 }
 
 body.dark {
