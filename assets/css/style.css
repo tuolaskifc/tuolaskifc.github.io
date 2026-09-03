@@ -587,6 +587,10 @@ footer a:hover { text-decoration: underline; }
 }
 
 /* ===== 站长模式 / 私密文章 ===== */
+.course-tag {
+  border-color: var(--sand) !important;
+  color: var(--sand) !important;
+}
 .private-tag {
   border-color: var(--accent) !important;
   color: var(--accent) !important;

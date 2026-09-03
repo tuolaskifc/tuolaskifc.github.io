@@ -42,11 +42,12 @@ personal-website/
 ├── easter-egg-play.html    # 彩蛋③：小游戏合集（permalink: /play/）
 ├── _layouts/
 │   ├── default.html        # 主布局：splash + nav + 全部彩蛋触发 + 主题/语言
-│   └── post.html           # 文章页布局（独立布局，见"已知问题"）
+│   └── post.html           # 文章页布局（继承 default，支持 course 课程徽章）
 ├── _posts/                 # 博客文章（文件名 = 日期-标题，front matter 控制可见性）
-│   ├── 2026-07-05-welcome.md
-│   ├── 2026-07-20-ai4s-compound-c-nmr-analysis.md    # 公开
-│   └── 2026-07-25-umpolung.md                        # private: true
+│   ├── 2026-06-12-umpolung.md                          # 公开 · 有机化学H1研讨课（course 徽章）
+│   ├── 2026-07-05-welcome.md                           # 公开
+│   ├── 2026-07-20-ai4s-compound-c-nmr-analysis.md      # 公开 · AI4S交叉实践课（course 徽章）
+│   └── 2026-08-26-browser-plugins.md                   # 公开 · 咪咕/爱奇艺防剧透插件分享
 ├── assets/
 │   ├── css/style.css       # 全站样式（主题变量、splash、卡片、彩蛋样式）
 │   └── images/
@@ -190,6 +191,7 @@ personal-website/
 title: "文章标题"
 date: 2026-08-08
 tags: [标签1, 标签2]
+course: 某课程/来源      # 可选：文章页会显示 🎓 课程徽章
 private: true        # 想公开就删掉这一行
 mathjax: true        # 需要公式就加上
 ---
@@ -228,3 +230,4 @@ mathjax: true        # 需要公式就加上
 | 2026-08-23 | 配色升级（方案 A·APEX 战魂，参考 Raycast 设计系统）：纯黑 `#08070a`、艳红 `#b52b2b`、沙金提亮 `#d8c9a3`；hero 顶部加红色斜条纹；OG 卡片与 favicon 配色同步 |
 | 2026-09-03 | 部署方式统一：删除 `jekyll.yml` Actions workflow，改用 GitHub Pages legacy 构建（原 workflow 因"下划线目录"误判而多余，与 legacy 双构建冲突） |
 | 2026-09-03 | 首页板块「研究兴趣」→「兴趣与展望」：3 张高深卡片改为 2 块务实内容（出国深造 / 用计算与 AI 解决化学），hero 简介同步收敛；板块锚点 `#research` → `#interests`，导航文案同步；卡片 grid 支持自动两列 |
+| 2026-09-03 | 技能标签更新（中英同步）：去 RDKit/AI波谱，加 C/Python/机器学习/Vibe Coding/计算化学；新增文章页 `course` 字段 → 显示 🎓 课程徽章；极性反转文章转公开并改期 6-12（标注有机化学H1研讨课）；NMR 文章标注 AI4S 交叉实践课；新增插件分享文章（8-26） |
