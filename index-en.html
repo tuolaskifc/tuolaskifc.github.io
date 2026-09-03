@@ -60,7 +60,7 @@ lang: en
     {% for post in site.posts limit:5 %}
     <div class="post-card{% if post.private %} post-card-private{% endif %}" data-private="{{ post.private }}" onclick="location.href='{{ post.url | relative_url }}'">
       <div class="post-meta">
-        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
+        <time datetime="{{ post.date | date_to_xmlschema }}">{% if post.date_display %}{{ post.date_display }}{% else %}{{ post.date | date: "%Y-%m-%d" }}{% endif %}</time>
         {% if post.private %}<span class="post-tag private-tag">🔒 Private</span>{% endif %}
         {% if post.tags %}
         <span class="post-tag">{{ post.tags | first }}</span>
