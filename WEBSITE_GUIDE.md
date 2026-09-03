@@ -14,7 +14,7 @@
 | 站长 | 刘阳（Liu Yang）· 清华大学 · 致理书院 · 化学大二 |
 | 定位 | 学术名片（外层）+ 学习记录 + 私人游乐场（内层，彩蛋触发） |
 | 主题 | APEX Legends 风格（暗黑 #0a0a0a / 主红 #8b1a1a / 沙色 #c9b99a） |
-| 技术栈 | Jekyll（静态站）+ GitHub Pages + GitHub Actions 自动构建 |
+| 技术栈 | Jekyll（静态站）+ GitHub Pages legacy 自动构建 |
 | 语言 | 中文（默认 `/`）+ 英文（`/en/`）双版 |
 
 ---
@@ -22,8 +22,8 @@
 ## 二、技术栈与构建
 
 - **Jekyll 静态网站生成器**，源码在 `personal-website/` 目录
-- 推送到 GitHub `main` 分支 → Actions 自动构建 → 部署到 Pages
-- 配置在 `_config.yml`：站点信息、博客分页（每页 10 篇）、exclude 列表、默认布局
+- 推送到 GitHub `main` 分支 → **GitHub Pages legacy 构建自动部署**（已删 Actions workflow，避免双构建冲突）
+- 配置在 `_config.yml`：站点信息、exclude 列表、默认布局
 - **本机没有 Ruby/Jekyll**，无法本地预览，改完直接 push 看线上
 - 无 Gemfile，纯 GitHub Pages 标准构建
 
@@ -225,4 +225,5 @@ mathjax: true        # 需要公式就加上
 | 2026-08-08 | `post.html` 改为继承 `default` 布局：文章页获得彩蛋触发、站长模式、语言切换、OG meta，与主页功能一致（修复已知问题 1） |
 | 2026-08-08 | 修复 splash 在非首页页面误显示：`.splash` CSS 中重复的 `display:flex` 覆盖了 `display:none`，删除后 splash 仅首页显示 |
 | 2026-08-23 | 配色升级（方案 A·APEX 战魂，参考 Raycast 设计系统）：纯黑 `#08070a`、艳红 `#b52b2b`、沙金提亮 `#d8c9a3`；hero 顶部加红色斜条纹；OG 卡片与 favicon 配色同步 |
+| 2026-09-03 | 部署方式统一：删除 `jekyll.yml` Actions workflow，改用 GitHub Pages legacy 构建（原 workflow 因"下划线目录"误判而多余，与 legacy 双构建冲突） |
 | 2026-08-08 | 博客列表页改用 `site.posts`（`paginator` 在子目录不生效），删除 `_config.yml` 中分页配置；添加试管 SVG favicon + ICO 备用 |
